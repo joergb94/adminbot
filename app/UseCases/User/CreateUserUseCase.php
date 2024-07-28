@@ -1,26 +1,30 @@
 <?php
 namespace App\UseCases\User;
-
+use App\Class\BaseTransaction;
 use App\Interfaces\UserRepositoryInterface;
-use App\Exceptions\GeneralException;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class CreateUserUseCase {
     protected $userRepository;
+    protected $transaction;
 
-    public function __construct(UserRepositoryInterface $userRepository) {
+    public function __construct(BaseTransaction $transaction, UserRepositoryInterface $userRepository) {
         $this->userRepository = $userRepository;
+        $this->transaction = $transaction;
     }
 
     public function execute(array $data) {
-        return DB::transaction(function () use ($data) {
+        try {
+            $this->transaction->beginTransaction();
+            $data['password'] = Hash::make($data['password']);
             $result = $this->userRepository->create($data);
-            
-            if (!$result) {
-                throw new GeneralException(__('Failed to update user.'));
-            }
-
             return $result;
-        });
+        } catch (\Exception $e) {
+            $this->transaction->rollbackTransaction();
+            $this->transaction->throwNewQueryException($e->getMessage());
+        }
+
+           
+   
     }
 }
