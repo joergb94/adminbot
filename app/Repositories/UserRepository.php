@@ -51,7 +51,7 @@ class UserRepository implements UserRepositoryInterface
 
     public function create(array $data): User
     {
-        return $this->model::create($data);
+        return User::create($data);
     }
 
     public function update(User $user, array $data): Bool

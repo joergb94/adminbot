@@ -15,7 +15,7 @@ class CreateUserUseCase {
     public function execute(array $data) {
         return DB::transaction(function () use ($data) {
             $result = $this->userRepository->create($data);
-
+            
             if (!$result) {
                 throw new GeneralException(__('Failed to update user.'));
             }

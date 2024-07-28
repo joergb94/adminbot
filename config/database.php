@@ -95,7 +95,7 @@ return [
         'mongodb' => [
             'driver' => 'mongodb',
             'dsn' => env('DB_URI','mongodb://localhost:27017/'),
-            'database' => 'sample_mflix',
+            'database' => env('DB_DATABASE', 'sample_mflix'),
           ],
 
     ],
