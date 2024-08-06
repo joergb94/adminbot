@@ -1,10 +1,11 @@
 <?php
 namespace App\UseCases\User;
-use App\Class\BaseTransaction;
-use App\Interfaces\UserRepositoryInterface;
-use Illuminate\Support\Facades\Hash;
 
-class CreateUserUseCase {
+use App\Interfaces\UserRepositoryInterface;
+use App\Exceptions\GeneralException;
+use App\Class\BaseTransaction;
+use Illuminate\Support\Facades\Hash;
+class UpdatePassUserUseCase {
     protected $userRepository;
     protected $transaction;
 
@@ -13,12 +14,22 @@ class CreateUserUseCase {
         $this->transaction = $transaction;
     }
 
-    public function execute(array $data) {
+    public function execute(int $id, array $data): bool {
+        $user = $this->userRepository->find($id);
+
         try {
             $this->transaction->beginTransaction();
-            $data['password'] = Hash::make($data['password']);
-            $result = $this->userRepository->create($data);
+            if (!$user) {
+                throw new GeneralException(__('User not found.'));
+            }
+            
+            $result = $this->userRepository->updatePassword($user, $data);
+
+            if (!$result) {
+                throw new GeneralException(__('Failed to update password user.'));
+            }
             return $result;
+
         } catch (\Exception $e) {
             $this->transaction->rollbackTransaction();
             $this->transaction->throwNewQueryException($e->getMessage());

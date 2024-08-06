@@ -51,12 +51,30 @@ class UserRepository implements UserRepositoryInterface
 
     public function create(array $data): User
     {
-        return $this->model::create($data);
+        return $this->model::create([
+                        'first_name' => $data['first_name'],
+                        'last_name' => $data['last_name'],
+                        'phone' => $data['phone'],
+                        'email' => $data['email'],
+                        'message' => $data['message'],
+                        'reference' => $data['reference'],
+                        'password' => Hash::make($data['password']),
+                    ]);
     }
 
     public function update(User $user, array $data): Bool
     {
-           return $user->update($data);
+           return $user->update([
+                            'first_name' => $data['first_name'],
+                            'last_name' => $data['last_name'],
+                            'phone' => $data['phone'],
+                            'email' => $data['email'],
+                        ]);
+    }
+
+    public function updatePassword(User $user, array $data): Bool
+    {
+           return $user->update(['password' => Hash::make($data['password'])]);
     }
 
 

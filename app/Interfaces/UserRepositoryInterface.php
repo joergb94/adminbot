@@ -9,6 +9,7 @@ interface UserRepositoryInterface
     public function find(int $id);
     public function create(array $data);
     public function update(User $user, array $data);
+    public function updatePassword(User $user, array $data);
     public function delete(int $id);
     public function restore(int $id);
 }
