@@ -17,3 +17,11 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+/public/vendor
+/storage
+/storage/
+/storage/*.key
+docker-compose.override.yml
+/cfdi
+/cfdi/*
+.DS_Store

@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mongodb'),
+    'default' => env('DB_CONNECTION', 'mysql'),
 
     /*
     |--------------------------------------------------------------------------
@@ -92,11 +92,6 @@ return [
             // 'encrypt' => env('DB_ENCRYPT', 'yes'),
             // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
         ],
-        'mongodb' => [
-            'driver' => 'mongodb',
-            'dsn' => env('DB_URI','mongodb://localhost:27017/'),
-            'database' => env('DB_DATABASE', 'sample_mflix'),
-          ],
 
     ],
 

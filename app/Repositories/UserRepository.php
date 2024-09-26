@@ -1,91 +1,57 @@
 <?php
+
 namespace App\Repositories;
 
 use App\Models\User;
-
-use App\Interfaces\UserRepositoryInterface;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Ramsey\Uuid\Uuid;
+use Illuminate\Support\Str;
+use Carbon\Carbon;
 
-class UserRepository implements UserRepositoryInterface
+
+final class UserRepository extends BaseRepository
 {
-    private $model;
-  
-    public function __construct(User $model)
-    {
-        $this->model = $model;
+    public function __construct(User $model){
+        parent::__construct($model);
     }
 
-    public function all($criterion,$search,$status,$profile): LengthAwarePaginator
-    {              
-
-                    $rg = (strlen($criterion) > 0 &&  strlen($search) > 0) 
-                    ? $this->model->where('id','>',1)->where('id','!=',Auth::user()->id)->where($criterion, 'like', '%'. $search . '%')
-                    : $this->model->where('id','>',1)->where('id','!=',Auth::user()->id);
-
-            
-                    if($profile !='all'){
-                        $rg->where('type_user_id',$profile);
-                    }
-
-                    switch ($status) {
-                        case 1:
-                            $rg;
-                        break;
-                        case 'D':
-                            $rg->onlyTrashed();
-                        break;
-                } 
-
-                    $Users = $rg->orderBy('id', 'desc')->paginate(10);
-
-            return $Users;
+    public function findAll() {
+        return $this->model::orderBy('id', 'desc')->get();
     }
 
-    public function find(int $user_id): User
-    {
-        return $this->model::withTrashed()->find($user_id)->trashed();
+    public function findById(int $id) : User {
+        return $this->model::find($id);
     }
 
-
-    public function create(array $data): User
-    {
-        return $this->model::create([
-                        'first_name' => $data['first_name'],
-                        'last_name' => $data['last_name'],
-                        'phone' => $data['phone'],
-                        'email' => $data['email'],
-                        'message' => $data['message'],
-                        'reference' => $data['reference'],
-                        'password' => Hash::make($data['password']),
-                    ]);
+    public function findByUserUnverified(String $token) : ?User {
+        return $this->model::where('verification_token', $token)
+                            ->where('verified',false)
+                            ->whereRaw("client.created_at >= (CURRENT_TIMESTAMP - INTERVAL '3 days')::TIMESTAMP")->first();
     }
 
-    public function update(User $user, array $data): Bool
-    {
-           return $user->update([
-                            'first_name' => $data['first_name'],
-                            'last_name' => $data['last_name'],
-                            'phone' => $data['phone'],
-                            'email' => $data['email'],
-                        ]);
+    public function findByEmail(String $email)  {
+        $user = $this->model::whereRaw('LOWER(email) = ?', [$email])->first();
+        return $user;
     }
 
-    public function updatePassword(User $user, array $data): Bool
-    {
-           return $user->update(['password' => Hash::make($data['password'])]);
+    public function store(object $params){
+      
+       return  $this->model::create([
+                'name' => $params->name,
+                'first_name' => '',
+                'last_name' => '',
+                'phone' => $params->phone,
+                'find_out'=>$params->find_out,
+                'email' => strtolower($params->email),
+                'verification_token' => Uuid::uuid4()->toString(),
+                'verification_code' => Str::random(4),
+                'verification_sent_at' => Carbon::now(),
+                'password' => Hash::make($params->password),
+            ]);
     }
 
-
-    public function delete(int $User_id)
-    {    
-        return User::find($User_id)->delete();
-    }
-
-    public function restore(int $User_id)
-    {    
-        return User::withTrashed()->find($User_id)->restore();
+    public function update(User $User, array $params){
+        return $User->update($params);
     }
 
 }

@@ -44,6 +44,10 @@ return [
             'password' => env('MAIL_PASSWORD'),
             'timeout' => null,
             'local_domain' => env('MAIL_EHLO_DOMAIN'),
+            'cc' => env('MAIL_CC'),
+            'bcc' => env('MAIL_BCC'),
+            'subject' => 'a',
+            'template' => 'mail.verificationEmail',
         ],
 
         'ses' => [
@@ -130,5 +134,4 @@ return [
             resource_path('views/vendor/mail'),
         ],
     ],
-
 ];
