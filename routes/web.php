@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\BootController;
+use App\Http\Controllers\BotController;
 use App\Http\Controllers\RegistersController;
 /*
 |--------------------------------------------------------------------------
@@ -17,9 +17,7 @@ use App\Http\Controllers\RegistersController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [LoginController::class, 'showLoginForm']);
 Route::view('/offline', 'vendor.laravelpwa.offline')->name('offline');
 Route::get(__('routes.customer.login'), [LoginController::class, 'showLoginForm'])->name('login');
 Route::post(__('routes.customer.login'), [LoginController::class, 'login'])->name('login.submit');
@@ -36,10 +34,10 @@ Route::group(['middleware' => 'auth'], function () {
   
     Route::get(__('routes.customer.home'), [HomeController::class, 'index'])->name('home');
 
-    Route::get(__('routes.customer.boots'), [BootController::class, 'index'])->name('my-boots');
-    Route::get(__('routes.customer.boot'), [BootController::class, 'getEntityById'])->name('boot');
-    Route::post(__('routes.customer.boot'), [BootController::class, 'store'])->name('boot.store');
-    Route::put(__('routes.customer.boot'), [BootController::class, 'update'])->name('boot.update');
+    Route::get(__('routes.customer.bots'), [BotController::class, 'index'])->name('my-bots');
+    Route::get(__('routes.customer.bot'), [BotController::class, 'getEntityById'])->name('bot');
+    Route::post(__('routes.customer.bot'), [BotController::class, 'store'])->name('bot.store');
+    Route::put(__('routes.customer.bot'), [BotController::class, 'update'])->name('bot.update');
 });
 
 

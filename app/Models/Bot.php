@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Bot extends Model
 {
     use HasFactory,SoftDeletes;
-    protected $table= 'users';
+
     /**
      * The attributes that are mass assignable.
      *

@@ -4,20 +4,21 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\UseCases\Finance\Entity\Find\FindEntityAllUseCase;
+use App\UseCases\Bot\Find\FindBotAllUseCase;
+
 
 class HomeController extends Controller
 {   
-    private FindEntityAllUseCase    $findEntityAllUseCase;
+    private FindBotAllUseCase    $FindBotAllUseCase;
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct( FindEntityAllUseCase $findEntityAllUseCase,)
+    public function __construct( FindBotAllUseCase $FindBotAllUseCase,)
     {
         $this->middleware('auth');
-        $this->findEntityAllUseCase   = $findEntityAllUseCase;
+        $this->FindBotAllUseCase   = $FindBotAllUseCase;
     }
 
     /**
@@ -28,7 +29,7 @@ class HomeController extends Controller
     public function index()
     {   
         $user = Auth::user();
-        $records = $this->findEntityAllUseCase->__invoke();
-        return view('home.index',['user'=>$user,'entity'=>count($records)]);
+        $records = $this->FindBotAllUseCase->__invoke();
+        return view('home.index',['user'=>$user,'bots'=>count($records)]);
     }
 }

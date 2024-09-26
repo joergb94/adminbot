@@ -16,7 +16,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/cliente/inicio';
+    protected $redirectTo = '/inicio';
     protected FindUserByEmailActivedUseCase $findUserByEmailActivedUseCase;
     /**
      * Create a new controller instance.
@@ -32,7 +32,7 @@ class LoginController extends Controller
     public function showLoginForm(){
         
         if (Auth::check()) {
-            return redirect('/cliente/inicio');
+            return redirect('/inicio');
         } else {
             return view('auth.login');
         }
@@ -62,7 +62,7 @@ class LoginController extends Controller
             throw new GeneralException('Las credenciales son incorrectas!');
         }
 
-        return redirect()->intended('/cliente/inicio'); // Redirect to the intended URL or home page
+        return redirect()->intended('/inicio'); // Redirect to the intended URL or home page
         
     }
 

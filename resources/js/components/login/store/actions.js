@@ -9,7 +9,7 @@ export const moduleRequest = async ({ commit }, { action, params, toast }) => {
         switch (action) {
             case 'signInRequest':
                 response = await signInService(params);
-                window.location.href = "/cliente/inicio";
+                window.location.href = "/inicio";
                 break;
         }
     } catch (errors) {

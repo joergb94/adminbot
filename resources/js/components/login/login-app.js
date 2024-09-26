@@ -4,7 +4,7 @@ import app from "@/base-app";
 
 
 const routes = [
-    { path: '/cliente/entrar', component: {} },
+    { path: '/login', component: {} },
 ];
 
 const router = createRouter({

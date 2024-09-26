@@ -1,14 +1,14 @@
 <script setup>
     const props = defineProps({
         user : Array,
-        entity: Number
+        bots: Number
     });
     const user = props.user;
-    const entity = props.entity;
+    const bots = props.bots;
 </script>
 
 <template>
-        <Card class="col-sm-6 text-center">
+        <Card class="col-sm-6 neo-background  text-center">
             <template #header>
                 <div class="col-12">
                     <img alt="user header" src="/assets/logo-name.png"  width="100%"  />
@@ -18,12 +18,11 @@
                 <h2>Bienvenido</h2>
             </template>
             <template #subtitle v-if="user"> 
-                <h4 v-text="user.name+' '+user.first_name+' '+user.last_name"></h4>
+                <h3 class="neo-text-green" v-text="user.name+' '+user.last_name"></h3>
             </template>
             <template #content>
-                <h2 v-if="entity == 0"  ><fontAwesomeIcon icon="fa fa-triangle-exclamation" class="mr-1 text-yellow-500" />Vaya, no cuentas aún con ninguna empresa.</h2>
-
-                <h4 v-if="entity == 0" >Dirígete a <a href="/boots" class="text-yellow-500">Mis Boots</a> para registrar las empresas que necesites facturar</h4>
+                <h2 v-if="bots == 0"  ><fontAwesomeIcon icon="fa fa-triangle-exclamation" class="mr-1 neo-text-green" />Vaya, no cuentas aún con ningun bot.</h2>
+                <h4 v-if="bots == 0" >Dirígete a <a href="/bots" class="neo-text-green text-underline">Mis Boots</a> para crea el primero.</h4>
             </template>
         </Card>
 </template>

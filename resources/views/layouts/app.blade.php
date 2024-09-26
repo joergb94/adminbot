@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" type="image/png" href="{{ asset('assets/logo.png') }}">
-    <link href="{{ asset('assets/css/css/layout-light.css')}}" rel="stylesheet">
-    <link href="{{ asset('assets/css/theme/blue/theme-light.css')}}" rel="stylesheet">
+    <link href="{{ asset('assets/css/css/layout-dark.css')}}" rel="stylesheet">
+    <link href="{{ asset('assets/css/theme/blue/theme-dark.css')}}" rel="stylesheet">
     <script src="{{ asset('assets/js/loader.js')}}"></script>
     <title>{{ config('app.name', 'Daytech') }}</title>
     @stack('vite-resources-js')
@@ -61,15 +61,14 @@
 <body id="app">
     @include('layouts.items.loader')
     <div id ="main-load" class="hide">
-        <div class="col-12">
+        <div class="col-12  surface-200">
             @yield('layout-topbar')
         </div>
-        <div class="layout-content">
+        <div class="layout-content surface-200">
             <div class="flex flex-wrap align-items-center justify-content-center p-1 m-1">
                 @yield('layout-content')
             </div>
         </div>
-        @include('layouts.items.footer')
     </div>
 <body>
 </html>

@@ -12,10 +12,7 @@ export default defineConfig({
                 'resources/js/components/errors/error-app.js',
                 'resources/js/components/login/login-app.js',
                 'resources/js/components/home/home-app.js',
-                'resources/js/components/entity/entity-app.js',
-                'resources/js/components/billing/billing-app.js',
-                'resources/js/components/bill/bill-app.js',
-                'resources/js/components/verification/verification-app.js'
+                'resources/js/components/entity/entity-app.js'
             ],
             refresh: true,
         }),

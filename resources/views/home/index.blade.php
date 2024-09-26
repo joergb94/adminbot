@@ -6,6 +6,6 @@
     <navbar-component :authenticated="{{ Auth::check() ? 'true' : 'false' }}"  token = "{{ csrf_token() }}"></navbar-component>
 @endsection
 @section('layout-content')
-        <home-component :user="{{$user}}" :entity="{{$entity}}" ></home-component>
+        <home-component :user="{{$user}}" :bots="{{$bots}}" ></home-component>
 @endsection
 
