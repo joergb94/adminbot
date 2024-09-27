@@ -1,4 +1,5 @@
-<div id="loader-socket" class="case__loading">
+<div id="loader-socket" class="container-loader">
+	<div  class="case__loading">
 		<img src="{{ asset('assets/logo.png') }}" width="200px">
 	<div class="big__circle">
 		<div class="inner__circle"></div>
@@ -15,3 +16,4 @@
 			</div>
 		</div>
 	</div>
+</div>

@@ -36,27 +36,28 @@ const onSubmit = handleSubmit(async (data) => {
 <template>
     <Toast />
     <div class="grid grid-cols-1 md:grid-cols-2 h-screen w-full justify-center items-center">
-        <div class="col w-full flex justify-center mt-5 ml-5 mb-5">
-            <prime-card class=" col-10 mt-5 border-round text-center surface-300 w-80 h-80">
+        <div class="col w-full v-full flex justify-center mt-5 ml-5 mb-5 from-robot-adjust">
+           <div class="ml-5 col-10 col-offset-1" >
+            <prime-card style="height: max-content; width: max-content;" class="ml-5 mt-5 rounded-card-form text-center surface-300 w-80 h-70">
                 <template #title>
-                    <div class="grid mt-2 text-center">
-                        <div class="col-12">
-                            <prime-image src="/assets/logo.png" alt="Image" width="32" />
-                            <h4 class="mt-2">¡Inicia sesión en FlexDialog!</h4>
+                    <div class="grid mt-2 mr-2 ml-2">
+                        <div class="col-10 col-offset-1 text-center">
+                            <prime-image src="/assets/logo.png" alt="Image" width="150px" />
+                            <h2 class="mt-2 text-black-alpha-90"> <b>¡Inicia sesión en FlexDialog!</b></h2>
                         </div>
                     </div>
                 </template>
                 <template #subtitle>
-                    <div class="grid mt-2">
-                        <div class="col-12">
-                            <p class="ml-2">Descubre la automatización definitiva para transformar tu atención al cliente.</p>
+                    <div class="grid mt-2 mr-2 ml-2">
+                        <div class="col-10 col-offset-1 text-left">
+                            <p class="text-white">Descubre la automatización definitiva para <br/> transformar tu atención al cliente.</p>
                         </div>
                     </div>
                 </template>
                 <template #content>
                     <form id="frmLogin" @submit.prevent="onSubmit">
-                        <div v-if="!showLoading" class="grid">
-                            <div class="col-12">
+                        <div v-if="!showLoading" class="grid mt-2 mr-2 ml-2">
+                            <div class="col-10 col-offset-1">
                                 <InputStringComponent
                                     v-model="email"
                                     label="correo electrónico"
@@ -65,7 +66,7 @@ const onSubmit = handleSubmit(async (data) => {
                                     required
                                 />
                             </div>
-                            <div class="col-12">
+                            <div class="col-10 col-offset-1">
                                 <InputStringComponent
                                     v-model="password"
                                     label="Contraseña"
@@ -86,17 +87,20 @@ const onSubmit = handleSubmit(async (data) => {
                     </form>
                 </template>
                 <template v-if="!showLoading" #footer>
-                    <div class="text-center">
-                        <prime-button type="submit" label="Iniciar Sesión" :class="'bg-blue-400 w-full'" raised form="frmLogin" />
+                    <div class="grid mt-2 mr-2 ml-2 text-center">
+                        <prime-button type="submit" label="Iniciar Sesión" :class="'button-flexbetta col-10 col-offset-1'" raised form="frmLogin" />
                     </div>
-                    <div class="grid text-center mt-5 mb-2">
-                        <p> ¡Para generar tu factura tendrás que <a href="/cliente/registro">crear una cuenta</a> o ingresar a ella si ya la tienes!</p>
+                    <div class="grid text-center mt-5 mr-2 ml-2 mb-5">
+                        <div class="col-10 col-offset-1">
+                            <p> ¡Para crear un bot tendrás que <a href="/registro">crear una cuenta</a> o ingresar a ella si ya la tienes!</p>
+                        </div>
                     </div>
                 </template>
             </prime-card>
+           </div>
         </div>
         <div class="col w-full flex justify-center mt-5 mr-5 mb-5">
-            <h2 class="text-center mt-5">Content</h2>
+            <prime-image class="robot-adjust" src="/assets/Robot.png" alt="Image" width="100%" />
         </div>
     </div>
 

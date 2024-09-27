@@ -61,7 +61,7 @@ onMounted(() => { items.value = handleMenu()});
             <template #item="{ item, props, hasSubmenu, root }">
                 <a v-ripple :href="item.url" :target="item.target" v-bind="props.action" class="ml-5">
                     <span>
-                        <fontAwesomeIcon :icon="item.icon" class="mr-1 text-primary-00" />{{ item.label }}
+                        <fontAwesomeIcon :icon="item.icon" class="mr-1  text-white" />{{ item.label }}
                     </span> 
                 </a>
                 </template>

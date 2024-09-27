@@ -7,7 +7,7 @@ axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 console.log(import.meta.env.VITE_APP_API_BASE_URL);
 
-const axiosClient = axios.create({ baseURL: import.meta.env.VITE_APP_API_BASE_URL });
+const axiosClient = axios.create({ baseURL: import.meta.env.VITE_APP_API_BASE_URL});
 
 axiosClient.interceptors.response.use(
     function (response) {

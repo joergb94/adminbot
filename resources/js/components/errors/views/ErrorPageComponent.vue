@@ -28,7 +28,7 @@
                         </div>
                         <div class="col-12">
                             <div class="text-center mb-2">
-                                <prime-button type="button" label="Continuar Navegando" severity="info" @click="onReload"/>
+                                <prime-button type="button" label="Continuar Navegando" :class="'button-flexbetta'" @click="onReload"/>
                             </div>
                         </div>
                     </div>

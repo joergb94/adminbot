@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" type="image/png" href="{{ asset('assets/logo.png') }}">
-    <link href="{{ asset('assets/css/css/layout-dark.css')}}" rel="stylesheet">
-    <link href="{{ asset('assets/css/theme/blue/theme-dark.css')}}" rel="stylesheet">
+    <link href="{{ asset('assets/css/css/layout-light.css')}}" rel="stylesheet">
+    <link href="{{ asset('assets/css/theme/blue/theme-light.css')}}" rel="stylesheet">
     <link href="{{ asset('assets/css/css/´prime-flex.css')}}" rel="stylesheet">
     <script src="{{ asset('assets/js/loader.js')}}"></script>
     <title>{{ config('app.name', 'Daytech') }}</title>
