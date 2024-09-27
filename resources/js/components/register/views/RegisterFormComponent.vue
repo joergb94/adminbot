@@ -55,89 +55,110 @@ const onSubmit = handleSubmit(async (data) => {
 <template>
     <Toast />
     <ConfirmDialog class="sm:col-12 lg:col-4 xl:col-4"></ConfirmDialog>
-    <prime-card class="mt-5 w-8">
-        <template #title>
-            <div class="flex flex-wrap align-items-center mb-3 gap-2">
-                <div class="grid mt-2">
-                    <div class="sm:col-2 lg:col-2 xl:col-2">
-                        <prime-image src="/assets/logo.png" class="mt-2" alt="Image" width="32" />
-                    </div>
-                    <div class="sm:col-4 lg:col-4 xl:col-4"> <h4 class="mt-2 ml-4">Registro</h4></div>
+ 
+    <div class="grid grid-cols-1 md:grid-cols-2 h-screen w-full justify-center items-center">
+        <div class="col w-full flex justify-center mt-5 ml-5 mb-5">
+            <div class="ml-5 col-10 col-offset-1" >
+                <div class="col-offset-1 col-10 text-left">
+                    <prime-image src="/assets/logo.png" alt="Image" width="150px" />
+                </div>
+                <div class="pt-5 col-offset-1 col-10 text-center">
+                <h2 class="mt-5 mb-5 text-white">Ampliamos y mejoramos <br> el proceso de tu soporte</h2>
+                <p class="mt-5 mb-5 text-white">Ponte en contactro con nuesto equipo y<br>
+                    te ayudaremos a automatizar las <br>
+                    solicitudes de tus clientes</p>
                 </div>
             </div>
-        </template>
-        <template #content>
-            <form v-if="!showLoading" id="frmRegister" @submit.prevent="onSubmit">
-                <div class="flex flex-wrap align-items-center mb-3 gap-2">
-                    <div className="grid">
-                        <div class="sm:col-12 lg:col-12 xl:col-12">
-                            <InputStringComponent
-                                label="Nombre(s)"
-                                icon="fa-solid fa-user"
-                                v-model="name"
-                                placeholder="Nombre(s)"
-                                required
-                                :error="errors.name"
-                                :show-only-value="false"
-                            />
+        </div>
+        <div class="col w-full flex justify-center mt-5 mr-5 mb-5">
+            
+            <div class="ml-5 col-10 col-offset-1" >
+                <prime-card class="ml-5 mt-5 rounded-card-form text-center surface-300 w-80 h-70">
+                    <template #content>
+                        <form v-if="!showLoading" id="frmRegister" @submit.prevent="onSubmit">
+                            <div class="grid mt-2 mr-2 ml-2">
+                                <div className="grid">
+                                    <div class="mt-2 col-5 col-offset-1">
+                                        <InputStringComponent
+                                            label="Nombre(s)"
+                                            icon="fa-solid fa-user"
+                                            v-model="name"
+                                            placeholder="Nombre(s)"
+                                            required
+                                            :error="errors.name"
+                                            :show-only-value="false"
+                                        />
+                                    </div>
+                                    <div class="mt-2 col-5">
+                                        <InputStringComponent
+                                            label="Apellido(s)"
+                                            icon="fa-solid fa-user"
+                                            v-model="name"
+                                            placeholder="Apellido(s)"
+                                            required
+                                            :error="errors.name"
+                                            :show-only-value="false"
+                                        />
+                                    </div>
+                                    <div class="mt-2 col-5 col-offset-1">
+                                        <InputMaskComponent
+                                            label="Telefono"
+                                            :icon="'fa-solid fa-user'"
+                                            v-model="phone_number"
+                                            :placeholder="'Telefono'"
+                                            :error="errors.phone_number"
+                                            required
+                                        />
+                                    </div>
+                                    <div class="mt-2 col-5">
+                                        <InputStringComponent
+                                            label="Correo"
+                                            :icon="'fa-solid fa-user'"
+                                            v-model="email"
+                                            :placeholder="'correo electronico'"
+                                            :error="errors.email"
+                                            required
+                                        />
+                                    </div>
+                                    <div class="mt-2 col-10 col-offset-1">
+                                        <InputStringComponent
+                                            label="Contraseña"
+                                            :icon="'fa-solid fa-user'"
+                                            v-model="password"
+                                            type="password"
+                                            :placeholder="'correo electronico'"
+                                            :error="errors.password"
+                                            required
+                                        />
+                                    </div>
+                                    <div class="mt-2 col-10 col-offset-1">
+                                        <InputStringComponent
+                                            label="Confirmar Contraseña"
+                                            :icon="'fa-solid fa-user'"
+                                            v-model="password_confirmation"
+                                            type="password"
+                                            :placeholder="'confirmar contraseña'"
+                                            :error="errors.password_confirmation"
+                                            required
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="grid col-12">
+                            <LoadingComponent v-if="showLoading" title="Generando su cuenta..."/>
                         </div>
-                        <div class="sm:col-12 lg:col-12 xl:col-12">
-                            <InputMaskComponent
-                                label="Telefono"
-                                :icon="'fa-solid fa-user'"
-                                v-model="phone_number"
-                                :placeholder="'Telefono'"
-                                :error="errors.phone_number"
-                                required
-                            />
+                    </template>
+                    <template v-if="!showLoading" #footer>
+                        <div class="grid mt-2 mr-2 ml-2 text-center">
+                            <prime-button type="submit" label="Registrase ahora" :class="'button-flexbetta col-10 col-offset-1'" raised form='frmRegister' />
                         </div>
-                        <div class="sm:col-12 lg:col-12 xl:col-12">
-                            <InputStringComponent
-                                label="Correo"
-                                :icon="'fa-solid fa-user'"
-                                v-model="email"
-                                :placeholder="'correo electronico'"
-                                :error="errors.email"
-                                required
-                            />
-                        </div>
-                        <div class="sm:col-12 lg:col-12 xl:col-12">
-                            <InputStringComponent
-                                label="Contraseña"
-                                :icon="'fa-solid fa-user'"
-                                v-model="password"
-                                type="password"
-                                :placeholder="'correo electronico'"
-                                :error="errors.password"
-                                required
-                            />
-                        </div>
-                        <div class="sm:col-12 lg:col-12 xl:col-12">
-                            <InputStringComponent
-                                label="Confirmar Contraseña"
-                                :icon="'fa-solid fa-user'"
-                                v-model="password_confirmation"
-                                type="password"
-                                :placeholder="'confirmar contraseña'"
-                                :error="errors.password_confirmation"
-                                required
-                            />
-                        </div>
-                    </div>
-                </div>
-            </form>
-            <div class="grid col-12">
-                <LoadingComponent v-if="showLoading" title="Generando su cuenta..."/>
-            </div>
-        </template>
-        <template v-if="!showLoading" #footer>
-            <div class="text-center mb-2">
-                <prime-button type="submit" label="Registrase ahora" severity="info" raised form='frmRegister' />
-            </div>
-            <div class="gird text-center mt-5 mb-2">
-                    <p>¿Ya tienes cuenta? <a href="/cliente/entrar">¡Inicia sesion con nosotros!</a></p>    
-                </div>
-        </template>
-    </prime-card>
-
+                        <div class="gird text-center mt-5 mb-2">
+                                <p>¿Ya tienes cuenta? <a href="/cliente/entrar">¡Inicia sesion con nosotros!</a></p>    
+                            </div>
+                    </template>
+                </prime-card>
+           </div>
+        </div>
+    </div>
 </template>

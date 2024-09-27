@@ -80,9 +80,6 @@ const placeholder = computed(() => {
         <span v-if="required" class="pr-1 text-red-600">*</span>
         <label class="text-xs text-600">{{ label }}</label>
         <div class="p-inputgroup flex-1">
-            <span class="p-inputgroup-addon">
-                <FontAwesomeIcon :icon="icon" class="mr-1 text-primary-700" />
-            </span>
             <InputMask
                 :mask="props.mask"
                 v-model="value"

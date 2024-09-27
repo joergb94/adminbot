@@ -72,7 +72,8 @@ onMounted(() => { items.value = handleMenu()});
                         type="button" >
                         <i class="text-white pi pi-question-circle"></i>
                     </Button>
-                    <Button  
+                    <Button
+                        v-if="authenticated"  
                         style="border-left: 2px solid whitesmoke !important;"
                         class="button-navbar text-white" 
                         type="button" 
@@ -88,20 +89,23 @@ onMounted(() => { items.value = handleMenu()});
                 <Menu ref="menu" id="overlay_menu" :popup="true" >
                     <template #start>
                         <span class="inline-flex align-items-center gap-1 px-2 py-2">
-                            <span class="text-xl font-semibold">PRIME<span class="text-primary">APP</span></span>
+                            <span class="text-ml font-semibold">Configuaciones de usuario</span>
                         </span>
                     </template>
         
                     <template #end v-if="authenticated">
-                      <div  class="flex align-items-center gap-2">
+                      <div  class="flex align-items-center  text-center gap-2">
                         <form ref="logoutForm" action="/logout" method="POST" style="display: none;">
                             <input type="hidden" name="_token" :value="token">
                         </form>
-                        <a href="#" @click="logout">  
-                            <span>
-                                Salir   <fontAwesomeIcon icon="fa-solid fa-right-from-bracket" class="mr-1 text-primary-700" />
-                            </span>
-                        </a>
+                        <div class="col-12 text-center">
+                            <a href="#" @click="logout">  
+                                <span>
+                                    Salir   <fontAwesomeIcon icon="fa-solid fa-right-from-bracket" class="mr-1 text-primary-700" />
+                                </span>
+                            </a>
+                        </div>
+                    
                     </div>
                     </template>
                 </Menu>

@@ -76,10 +76,9 @@ const onSubmit = handleSubmit(async (data) => {
                                     required
                                 />
                             </div>
-                            
-                        </div>
-                        <div class="col-12 text-center mb-2">
-                            <a href="/cliente/registro">¿Olvidó su contraseña?</a>
+                            <div class="col-12 text-center mb-2">
+                                <a href="/registro">¿Olvidó su contraseña?</a>
+                            </div> 
                         </div>
                         <div class="grid col-12">
                             <LoadingComponent v-if="showLoading" title="Iniciando sesión..." />
