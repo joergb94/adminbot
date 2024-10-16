@@ -16,8 +16,11 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('language_id')->nullable();
             $table->string('name');
-            $table->string('desciption')->nullable();
-            $table->boolean('start_message')->default(0);
+            $table->string('role')->default('system');
+            $table->string('telegram_bot')->nullable();
+            $table->string('whatsapp_number')->nullable();
+            $table->string('content')->nullable();
+            $table->string('start_message')->nullable();
             $table->timestamps();
             $table->softDeletes();
 

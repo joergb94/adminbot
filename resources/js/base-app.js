@@ -6,11 +6,7 @@ import 'primeicons/primeicons.css';
 
 import { createApp } from 'vue';
 import PrimeVue from "primevue/config";
-import Button from 'primevue/button';
-import Card from 'primevue/card';
-import Image from 'primevue/image';
-import Toast from 'primevue/toast';
-import Dialog from 'primevue/dialog';
+
 
 
 
@@ -20,6 +16,11 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import ConfirmationService from 'primevue/confirmationservice';
 import ToastService from 'primevue/toastservice';
 import DialogService from 'primevue/dialogservice'
+import Button from 'primevue/button';
+import Card from 'primevue/card';
+import Image from 'primevue/image';
+import Toast from 'primevue/toast';
+import Dialog from 'primevue/dialog';
 import Ripple from 'primevue/ripple';
 import store from './store';
 

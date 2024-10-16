@@ -1,20 +1,24 @@
-export const getRegisterEntityAll = (state) => {
-    return state.entity.records;
+export const getRegisterBotAll = (state) => {
+    return state.bot.records;
 };
 
 export const getInitialValues = (state) => {
-    return state.entity.initialValues;
+    return state.bot.initialValues;
 };
-export const getInitialValuesRFC = (state) => {
-    return state.entity.initialValuesRFC;
+export const getInitialValuesName = (state) => {
+    return state.bot.initialValuesName;
 };
 
-export const getRegisterEntity = (state) => {
-    return state.entity.record;
+export const getRegisterBot = (state) => {
+    return state.bot.record;
+};
+
+export const getRegisterValidateBotName = (state) => {
+    return state.bot.validateBotName;
 };
 
 export const getAddress = (state) => {
-    return state.entity.address;
+    return state.bot.address;
 };
 
 export const getTitle = (state) => {
@@ -22,7 +26,7 @@ export const getTitle = (state) => {
 };
 
 export const getSubTitle = (state) => {
-    return state.entity.subTitle;
+    return state.bot.subTitle;
 };
 
 export const getBreadcrumb = (state) => {
@@ -53,7 +57,7 @@ export const getModuleName = (state) => {
     return state.moduleName;
 };
 
-export const getRegisterEntitySearch = (state) => {
+export const getRegisterBotSearch = (state) => {
     return state.search;
 };
 

@@ -11,7 +11,7 @@ class TransactionalBotRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,24 @@ class TransactionalBotRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string',
+            'content' => 'required|string',
+            'telegram_bot' => 'required|string',
+            'whatsapp_number' => 'required|string',
+            'start_message' => 'required|string',
+            'language.id' => 'required|integer',
+            'language.name' => 'required|string',
+            'language_id' => 'required|integer',
         ];
+    }
+
+        /**
+     * Prepare the data for validation.
+     */
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'language_id' => $this->language['id'] ?? null,
+        ]);
     }
 }

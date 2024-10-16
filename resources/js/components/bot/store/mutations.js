@@ -1,17 +1,21 @@
-export const setRegisterEntityAll = (state, data) => {
-    state.entity.records = data;
+export const setRegisterBotAll = (state, data) => {
+    state.bot.records = data;
 };
 
-export const setRegisterEntity = (state, data) => {
-    state.entity.record = data;
+export const setRegisterBot = (state, data) => {
+    state.bot.record = data == null? true:false;
 };
+
+export const setRegisterValidateBotName = (state,data) => {
+    state.bot.validateBotName = data;
+}
 
 export const setIsUpdate= (state, data) => {
     state.isUpdate = data;
 };
 
 export const setAddress = (state, data) => {
-    state.entity.address = data;
+    state.bot.address = data;
 };
 
 export const setShowMainProgressBar = (state, show) => {
@@ -34,10 +38,10 @@ export const setShowModalReport = (state, show) => {
     state.showModalReport = show;
 };
 
-export const resetRegisterEntity = (state) => {
-    setRegisterEntity(state, state.entity.initialValues);
+export const resetRegisterBot = (state) => {
+    setRegisterBot(state, state.bot.initialValues);
 };
 
-export const setSegisterEntitySearch = (state, data) => {
+export const setSegisterBotSearch = (state, data) => {
     state.search = data;
 };

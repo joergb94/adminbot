@@ -16,7 +16,7 @@ const { toast } = useToastComposable();
 const props = defineProps({
     moduleName: {
         type: String,
-        default: 'registerEntity',
+        default: 'storeBot',
     },
 });
 

@@ -31,9 +31,6 @@ const mValue = computed({
     <span v-if="required && label.length" class="pr-1 text-red-600">*</span>
     <label v-if="label.length" class="text-xs text-600">{{ label }}</label>
     <div class="p-inputgroup flex-1">
-        <span class="p-inputgroup-addon">
-            <FontAwesomeIcon :icon="icon" class="mr-1 text-primary-700" />
-        </span>
         <MultiSelect
             v-model="mValue"
             :options="options"

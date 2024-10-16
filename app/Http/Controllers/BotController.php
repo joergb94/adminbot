@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Bot\FindBotByIdRequest;
+use App\Http\Requests\Bot\FindBotByNameRequest;
 use App\Http\Requests\Bot\BotIndexRequest;
 use App\Http\Requests\Bot\TransactionalBotRequest;
 use App\UseCases\Bot\Find\FindBotAllUseCase;
 use App\UseCases\Bot\Find\FindBotByIdUseCase;
+use App\UseCases\Bot\Find\FindBotByNameUseCase;
 use App\UseCases\Bot\StoreBotUseCase;
 use App\UseCases\Bot\UpdateBotUseCase;
 use Illuminate\Support\Facades\DB;
@@ -18,6 +20,7 @@ class BotController extends Controller
 {
     private FindBotAllUseCase    $findBotAllUseCase;
     private FindBotByIdUseCase   $findBotByIdUseCase;
+    private FindBotByNameUseCase $findBotByNameUseCase;
     private UpdateBotUseCase     $updateBotUseCase;
     private StoreBotUseCase      $storeBotUseCase;
     
@@ -25,11 +28,13 @@ class BotController extends Controller
     public function __construct(
         FindBotAllUseCase $findBotAllUseCase, 
         FindBotByIdUseCase  $findBotByIdUseCase,
+        FindBotByNameUseCase $findBotByNameUseCase,
         UpdateBotUseCase     $updateBotUseCase,
         StoreBotUseCase      $storeBotUseCase
     ){
         $this->findBotAllUseCase   = $findBotAllUseCase;
         $this->findBotByIdUseCase  = $findBotByIdUseCase;
+        $this->findBotByNameUseCase = $findBotByNameUseCase;
         $this->updateBotUseCase    = $updateBotUseCase;
         $this->storeBotUseCase     = $storeBotUseCase;
     }
@@ -57,12 +62,16 @@ class BotController extends Controller
         
     }
 
+    public function getBotByName(FindBotByNameRequest $request){
+        if (!$request->ajax()) abort(404);
+            $params = (object)$request->validated();
+            return response()->json(['record' => $this->findBotByNameUseCase->__invoke($params->name)]);
+    }
+
     public function store(TransactionalBotRequest $request){
         if (!$request->ajax()) abort(404);
             $params = (object)$request->validated();
-            DB::beginTransaction();
             $data =  $this->storeBotUseCase->__invoke($params);
-            DB::commit();
             return response()->json(['record' =>$data]);
         
       

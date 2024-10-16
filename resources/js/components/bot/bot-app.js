@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import EntityComponent from '@/components/entity/views/EntityComponent.vue';
+import BotComponent from '@/components/bot/views/BotComponent.vue';
 import NavbarComponent from '@/components/layouts/Navbar.vue';
 import InputStrignComponent from '@/components/form/InputStringComponent.vue';
 
@@ -9,16 +9,11 @@ import InputText from 'primevue/inputtext';
 import Card from 'primevue/card';
 import Toolbar from 'primevue/toolbar';
 import ConfirmDialog from 'primevue/confirmdialog';
-import Toast from 'primevue/toast';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-
-
-
-
 import app from "@/base-app";
 
 const routes = [
-    { path: '/cliente/empresas', component: {} },
+    { path: '/bots', component: {} },
 ];
 
 const router = createRouter({
@@ -36,7 +31,6 @@ app.component('IconField', IconField);
 app.component('Image', Image);
 app.component('Card', Card);
 app.component('ConfirmDialog', ConfirmDialog);
-app.component('Toast', Toast);
 app.component('Button', Button);
 app.component('InputText', InputText);
 app.component('FontAwesomeIcon',FontAwesomeIcon);
@@ -45,5 +39,5 @@ app.component('InputStrignComponent',InputStrignComponent);
 app.component('navbar-component',NavbarComponent);
 
 //principal component
-app.component('entity-component', EntityComponent);
+app.component('bot-component', BotComponent);
 app.mount("#app");

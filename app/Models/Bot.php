@@ -19,7 +19,10 @@ class Bot extends Model
                             'user_id',
                             'language_id',
                             'name',
-                            'description',
+                            'role',
+                            'content',
+                            'telegram_bot',
+                            'whatsapp_number',
                             'start_message',
                             'created_at',
                             'updated_at',
@@ -31,13 +34,14 @@ class Bot extends Model
         return [
             'id'                    => $this->id,
             'name'                  => $this->name,
-            'description'           => $this->description,
+            'role'                  => $this->role,
+            'content'           => $this->content,
             'start_message'         => $this->start_message,
             'created_at'            => $this->created_at,
             'updated_at'            => $this->updated_at,
             'deleted_at'            => $this->deleted_at,
             'language'              => $this->language,
-            'user'              => $this->user,
+            'user'                  => $this->user,
         ];
     }
 
@@ -50,4 +54,10 @@ class Bot extends Model
     {
         return $this->belongsTo(Language::class, 'language_id');
     }
+
+    public function flows()
+    {
+        return $this->hasMany(Flow::class,'bot_id','id');
+    }
+
 }

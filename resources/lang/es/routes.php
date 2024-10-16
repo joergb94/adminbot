@@ -5,7 +5,8 @@ return [
     'customer.register' => '/registro',
     'customer.verify' => '/verificacion/{token}',
     'customer.home' => '/inicio',
-    'customer.boots' => '/boots',
-    'customer.boot' => '/boot',
+    'customer.bots' => '/bots',
+    'customer.bot' => '/bot',
+    'customer.bot.nombre' => '/bot/nombre',
     'customer.logout' => '/logout',
 ];

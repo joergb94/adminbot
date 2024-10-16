@@ -154,7 +154,7 @@ const onSubmit = handleSubmit(async (data) => {
                             <prime-button type="submit" label="Registrase ahora" :class="'button-flexbetta col-10 col-offset-1'" raised form='frmRegister' />
                         </div>
                         <div class="gird text-center mt-5 mb-2">
-                                <p>¿Ya tienes cuenta? <a href="/cliente/entrar">¡Inicia sesion con nosotros!</a></p>    
+                                <p>¿Ya tienes cuenta? <a href="/login">¡Inicia sesion con nosotros!</a></p>    
                             </div>
                     </template>
                 </prime-card>

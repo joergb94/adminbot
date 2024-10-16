@@ -9,7 +9,7 @@
     <link href="{{ asset('assets/css/theme/blue/theme-light.css')}}" rel="stylesheet">
     <link href="{{ asset('assets/css/css/´prime-flex.css')}}" rel="stylesheet">
     <script src="{{ asset('assets/js/loader.js')}}"></script>
-    <title>{{ config('app.name', 'Daytech') }}</title>
+    <title>{{ config('app.name', 'FlexDialog') }}</title>
     @stack('vite-resources-js')
     @laravelPWA
     <!-- Web Application Manifest -->

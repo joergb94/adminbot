@@ -24,12 +24,7 @@ class RegistersRequest extends FormRequest
     {
         return [
             'register' => 'required|array',
-            'register.*.name' => 'required|string|exists:registers,name,deleted_at,NULL|min:4'
+            'register.*.name' => 'required|string|exists:registers,name|min:4'
         ];
-    }
-
-    public function validationData() //this method it going to be call by itself
-    {
-        return DataRequestAdapter::transformToUpper($this->all());
     }
 }

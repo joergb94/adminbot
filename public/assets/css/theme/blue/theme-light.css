@@ -6023,5 +6023,10 @@
    stroke-dashoffset: -124px;
   }
  }
+
+ .p-success {
+  border-color: green;
+  color: green;
+}
   
  

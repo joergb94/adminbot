@@ -1,4 +1,5 @@
 <script setup>
+import Checkbox from 'primevue/checkbox';
 import { ref, toRefs } from 'vue';
 import { watch } from 'vue';
 
@@ -28,4 +29,5 @@ watch(value, (newVal) => {
         <Checkbox id="binary" v-model="value" :binary="true" class="pr-1" />
         <label for="city1">{{ label }}</label>
     </div>
+    
 </template>

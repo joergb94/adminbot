@@ -1,11 +1,11 @@
 import {
-    findRegisterEntityAllService,
+    findRegisterBotAllService,
     findPostalCodeService,
-    findRegisterEntityByIdService,
-    storeRegisterEntityService,
-    updateRegisterEntityService,
-    findRegisterEntityByRFCService
-} from '../services/EntityService.js';
+    findRegisterBotByIdService,
+    storeRegisterBotService,
+    updateRegisterBotService,
+    findRegisterBotByNameService
+} from '../services/BotService.js';
 
 export const moduleRequest = async ({ commit }, { action, params, toast }) => {
     let response = null;
@@ -13,18 +13,18 @@ export const moduleRequest = async ({ commit }, { action, params, toast }) => {
     commit('setShowLoading', true);
     try {
         switch (action) {
-            case 'findRegisterEntityAllBladeRequest':
-                commit('setRegisterEntityAll', params);
+            case 'findRegisterBotAllBladeRequest':
+                commit('setRegisterBotAll', params);
                 commit('setShowLoading', false);
                 break;
-            case 'findRegisterEntityAllRequest':
-                response = await findRegisterEntityAllService();
-                commit('setRegisterEntityAll', response.data.records);
+            case 'findRegisterBotAllRequest':
+                response = await findRegisterBotAllService();
+                commit('setRegisterBotAll', response.data.records);
                 commit('setShowLoading', false);
                 break;
-            case 'findRegisterEntityByIdRequest':
-                response = await findRegisterEntityByIdService(params);
-                commit('setRegisterEntity', response.data.record );
+            case 'findRegisterBotByIdRequest':
+                response = await findRegisterBotByIdService(params);
+                commit('setRegisterBot', response.data.record );
                 commit('setShowModalForm', true);
                 break;
         }
@@ -38,7 +38,7 @@ export const moduleRequest = async ({ commit }, { action, params, toast }) => {
 //--- state modal request --------------------------------
 const thenModalRequest = (commit, dispatch, toast) => {
     commit('setShowModalForm', false);
-    dispatch('moduleRequest', { action: 'findRegisterEntityAllRequest', params: null, toast });
+    dispatch('moduleRequest', { action: 'findRegisterBotAllRequest', params: null, toast });
 };
 
 export const modalRequest = async ({ commit, dispatch }, { action, params, toast }) => {
@@ -46,21 +46,17 @@ export const modalRequest = async ({ commit, dispatch }, { action, params, toast
     commit('setShowFormProgressBar', true);
     try {
         switch (action) {
-            case 'storeRegisterEntityRequest':
-                await storeRegisterEntityService(params);
+            case 'storeRegisterBotRequest':
+                await storeRegisterBotService(params);
                 thenModalRequest(commit, dispatch, toast);
                 break;
-            case 'updateRegisterEntityRequest':
-                await updateRegisterEntityService(params);
+            case 'updateRegisterBotRequest':
+                await updateRegisterBotService(params);
                 thenModalRequest(commit, dispatch, toast);
                 break;
-            case 'findPostalCodeRequest':
-                response = await findPostalCodeService(params);
-                commit('setAddress', response.data);
-            break;
-            case 'findRegisterEntityByRFCRequest':
-                response = await findRegisterEntityByRFCService(params);
-                commit('setRegisterEntity', response.data.record );
+            case 'findRegisterBotByNameRequest':
+                response = await findRegisterBotByNameService(params);
+                commit('setRegisterValidateBotName', response.data.record );
             break;
         }
         commit('setShowFormProgressBar', false);
@@ -79,6 +75,7 @@ export const modalRequest = async ({ commit, dispatch }, { action, params, toast
                 });
             });
         }
+        commit('setRegisterValidateBotName', null);
         commit('setShowFormProgressBar', false);
     }
 };
@@ -86,12 +83,13 @@ export const modalRequest = async ({ commit, dispatch }, { action, params, toast
 //--- state without action request --------------------------------
 export const showModalFormState = ({ commit }, show) => {
     commit('setShowModalForm', show);
+    commit('setRegisterValidateBotName', null);
 };
 
-export const resetRegisterEntityState = ({ commit }) => {
-    commit('resetRegisterEntity');
+export const resetRegisterBotState = ({ commit }) => {
+    commit('resetRegisterBot');
 };
 
-export const registerEntitySearch = ({ commit }) => {
-    commit('setSegisterEntitySearch');
+export const registerBotSearch = ({ commit }) => {
+    commit('setSegisterBotSearch');
 };

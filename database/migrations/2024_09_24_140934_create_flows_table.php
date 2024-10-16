@@ -15,6 +15,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('bot_id')->nullable();
             $table->integer('sort')->default(0);
+            $table->string('name')->nullable();
+            $table->string('url')->nullable();
+            $table->string('description')->nullable();
             $table->json('addAnswerBefore')->nullable();
             $table->json('addKeyword')->nullable();
             $table->json('addAnswer')->nullable();

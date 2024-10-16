@@ -2,7 +2,6 @@
 import { ref, toRefs } from 'vue';
 import { watch } from 'vue';
 import ErrorMessageComponent from './ErrorMessageComponent.vue';
-
 const props = defineProps({
     modelValue: {
         type: String,
@@ -50,13 +49,13 @@ const handleInput = (newVal) => {
         </div>
     </div>
     <div v-else>
-        <span v-if="required" class="pr-1 text-red-600">*</span>
         <label class="text-xs text-600">{{ label }}</label>
+        <span v-if="required" class="pr-1 text-red-600">*</span>
         <div class="p-inputgroup flex-1">
             <Textarea
                 @input="handleInput"
                 v-model="value"
-                class="p-inputtext-sm sm:col-12 md:col- lg:col-12 xl:col-12"
+                class="p-inputtext sm:col-12 md:col- lg:col-12 xl:col-12"
                 :placeholder="label"
                 :readOnly="readOnly"
                 :class="{ 'p-invalid': error }"

@@ -21,13 +21,11 @@ const props = defineProps({
 const displaySize = ref(window.innerWidth);
 const registers = computed(() => props.registers);
 const filters = ref({
-    rfc: { value: '', matchMode: FilterMatchMode.CONTAINS },
-    business_name: { value: '', matchMode: FilterMatchMode.CONTAINS },
-    email: { value: '', matchMode: FilterMatchMode.CONTAINS },
-    first_phone: { value: '', matchMode: FilterMatchMode.CONTAINS },
-    second_phone: { value: '', matchMode: FilterMatchMode.CONTAINS },
+    name: { value: '', matchMode: FilterMatchMode.CONTAINS },
+    telegram_bot: { value: '', matchMode: FilterMatchMode.CONTAINS },
+    whatsapp_number: { value: '', matchMode: FilterMatchMode.CONTAINS },
 });
-const moduleName = 'registerEntity';
+const moduleName = 'registerBot';
 //check the value of progressbar and set on that
 const showLoading = ref(false);
 const dispatch = useStore().dispatch;
@@ -41,7 +39,7 @@ watch(
 
 const selectEntity = (row) => {
     const params = { id: row.data.id };
-    dispatch(`${moduleName}/moduleRequest`, { action: 'findRegisterEntityByIdRequest', params, toast });
+    dispatch(`${moduleName}/moduleRequest`, { action: 'findRegisterBotByIdRequest', params, toast });
 };
 </script>
 
@@ -63,24 +61,12 @@ const selectEntity = (row) => {
                 {{ rowData.index + 1 }}
             </template>
         </Column>
-        <Column field="rfc" header="RFC" :showFilterMenu="false" :sortable="true">
+        <Column field="name" header="Nombre" :showFilterMenu="false" :sortable="true">
             <template #body="slotProps">
                 <div>
-                    <h6>{{ slotProps.data.rfc }}</h6>
-                    <p v-if ="displaySize < 500">{{ slotProps.data.business_name }}</p>
+                    <h6>{{ slotProps.data.name}}</h6>
                 </div>
             </template>
-            <template #filter="{ filterModel, filterCallback }">
-                <InputText
-                    v-model="filterModel.value"
-                    type="text"
-                    @input="filterCallback()"
-                    class="p-column-filter p-inputtext-sm"
-                    placeholder="Buscar por RFC"
-                />
-            </template>
-        </Column>
-        <Column v-if ="displaySize > 500" field="business_name" header="Nombre de la Empresa" :showFilterMenu="false" :sortable="true">
             <template #filter="{ filterModel, filterCallback }">
                 <InputText
                     v-model="filterModel.value"
@@ -91,14 +77,25 @@ const selectEntity = (row) => {
                 />
             </template>
         </Column>
-        <Column v-if ="displaySize > 500" field="email" header="Correo Electronico" :showFilterMenu="false" :sortable="true">
+        <Column v-if ="displaySize > 500" field="telegram_bot" header="telegram" :showFilterMenu="false" :sortable="true">
             <template #filter="{ filterModel, filterCallback }">
                 <InputText
                     v-model="filterModel.value"
                     type="text"
                     @input="filterCallback()"
                     class="p-column-filter p-inputtext-sm"
-                    placeholder="Buscar por correo electronico"
+                    placeholder="Buscar por bot de telegram"
+                />
+            </template>
+        </Column>
+        <Column v-if ="displaySize > 500" field="whatsapp_number" header="whatsApp" :showFilterMenu="false" :sortable="true">
+            <template #filter="{ filterModel, filterCallback }">
+                <InputText
+                    v-model="filterModel.value"
+                    type="text"
+                    @input="filterCallback()"
+                    class="p-column-filter p-inputtext-sm"
+                    placeholder="Buscar por whatsApp"
                 />
             </template>
         </Column>
@@ -110,7 +107,7 @@ const selectEntity = (row) => {
         </Column>
         <template #empty>
             <LoadingComponent v-if="showLoading" />
-            <NoFoundDataComponent v-if="!showLoading" title="No hay Empresas" />
+            <NoFoundDataComponent v-if="!showLoading" title="No hay Bots" />
         </template>
     </DataTable>
 </template>

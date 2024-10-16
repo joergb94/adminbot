@@ -9,12 +9,12 @@ const props = defineProps({
 });
 
 const store = useStore();
-const moduleName = 'registerEntity';
+const moduleName = 'storeBot';
 const result = computed(() => props.result);
 
 const showModalFormHandler = (show) => {
     store.dispatch(`${moduleName}/showModalFormState`, show);
-    store.dispatch(`${moduleName}/resetRegisterEntityState`);
+    store.dispatch(`${moduleName}/resetRegisterBotState`);
 };
 
 </script>
