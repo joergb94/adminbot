@@ -5,7 +5,7 @@ import NavbarComponent from '@/components/layouts/Navbar.vue';
 import app from "@/base-app";
 
 const routes = [
-    { path: '/cliente/registro', component: {} },
+    { path:  '/:pathMatch(.*)*', component: {} },
 ];
 
 const router = createRouter({

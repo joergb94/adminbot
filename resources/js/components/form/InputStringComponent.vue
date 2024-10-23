@@ -90,19 +90,3 @@ const placeholder = computed(() => {
         <ErrorMessageComponent :message="error"></ErrorMessageComponent>
     </div>
 </template>
-
-<style>
-input:read-only {
-    background-color: #f2f2f2;
-}
-
-input::placeholder {
-    color: #acb1b6;
-    font-weight: normal;
-}
-
-.borderJustString {
-    font-weight: 600;
-    border-bottom: thin solid #add1ed;
-}
-</style>

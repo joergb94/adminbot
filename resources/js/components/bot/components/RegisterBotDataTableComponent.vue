@@ -25,7 +25,7 @@ const filters = ref({
     telegram_bot: { value: '', matchMode: FilterMatchMode.CONTAINS },
     whatsapp_number: { value: '', matchMode: FilterMatchMode.CONTAINS },
 });
-const moduleName = 'registerBot';
+const moduleName = 'storeBot';
 //check the value of progressbar and set on that
 const showLoading = ref(false);
 const dispatch = useStore().dispatch;
@@ -37,9 +37,23 @@ watch(
     }
 );
 
-const selectEntity = (row) => {
+const selectBot = (row) => {
     const params = { id: row.data.id };
     dispatch(`${moduleName}/moduleRequest`, { action: 'findRegisterBotByIdRequest', params, toast });
+};
+
+const tunrOnAndOffBot = (row) => {
+
+    let header = row.active < 0?'El Bot se activara':'El Bot se deasactivara';
+    confirmAction('¿ Estas seguro de realizar esta accion ?', {
+        header:header,
+        accept: () => {
+            const params = row;
+            const action = !!row.active? 'updateRegisterBotRequest' : 'storeRegisterBotRequest';
+            dispatch(`${moduleName}/modalRequest`, { action, params: params, toast });
+        }, 
+    });
+    
 };
 </script>
 
@@ -59,6 +73,7 @@ const selectEntity = (row) => {
         <Column v-if ="displaySize > 500" header="No">
             <template #body="rowData">
                 {{ rowData.index + 1 }}
+                
             </template>
         </Column>
         <Column field="name" header="Nombre" :showFilterMenu="false" :sortable="true">
@@ -101,8 +116,10 @@ const selectEntity = (row) => {
         </Column>
         <Column>
             <template #body="rowData">
-                <Button v-if ="displaySize > 500" label="Editar" icon="pi pi-pen-to-square" type="button" severity="success"  @click="selectEntity(rowData)" class="mt-1 mb-1" />
-                <Button v-else icon="pi pi-pen-to-square" type="button" severity="success"  @click="selectEntity(rowData)" class="mt-1 mb-1" />
+                <Button v-if ="displaySize > 500" label="" icon="pi pi-pen-to-square" type="button" severity="success"  @click="selectBot(rowData)" class="mt-1 mb-1" />
+                <!--<Button v-if ="displaySize > 500" label="" icon="pi pi-play" type="button" severity="success"  @click="tunrOnAndOffBot(rowData)" class="mt-1 mb-1" />
+                    <Button v-if ="displaySize > 500" label="" icon="pi pi-stop" type="button" severity="danger"  @click="tunrOnAndOffBot(rowData)" class="mt-1 mb-1" />
+                <Button  icon="pi pi-pen-to-square" type="button" severity="danger"  @click="selectBot(rowData)" class="mt-1 mb-1" />-->
             </template>
         </Column>
         <template #empty>

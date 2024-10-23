@@ -13,6 +13,8 @@ class Flow extends Model
   protected $fillable = [
                             'bot_id',
                             'sort',
+                            'name',
+                            'description',
                             'add_answer_before',
                             'add_keyword',
                             'add_answer_next',
@@ -27,6 +29,8 @@ class Flow extends Model
             'id'                => $this->id,
             'bot_id'            => $this->bot_id,
             'sort'              => $this->sort,
+            'name'              => $this->name,
+            'description'       => $this->description,
             'add_answer_before' => $this->add_answer_before,
             'add_keyword'       => $this->add_keyword,
             'add_answer_next'   => $this->add_answer_next,

@@ -1,5 +1,6 @@
 export default {
     title: 'Mis Bots',
+    icon: 'pi pi-comments',
     showLoading: false,
     showFormProgressBar: false,
     showModalForm: false,
@@ -12,7 +13,16 @@ export default {
         address: {},
         initialValues: {
             name: '',
+            content: '',
+            flows:[]
         },
         initialValuesName: {name: '',},
     },
+    flow:{
+        record:{},
+        initialValues:{
+            name: '',
+            description:'',
+        }
+    }
 };

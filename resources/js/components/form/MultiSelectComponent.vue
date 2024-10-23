@@ -54,10 +54,3 @@ const mValue = computed({
     </div>
     <ErrorMessageComponent :message="error"></ErrorMessageComponent>
 </template>
-
-<style>
-.placeholder {
-    color: #acb1b6;
-    font-weight: normal;
-}
-</style>

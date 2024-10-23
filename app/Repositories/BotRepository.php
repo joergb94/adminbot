@@ -33,32 +33,30 @@ final class BotRepository extends BaseRepository
                  'user_id' => Auth::user()->id,
                  'language_id' => $params->language_id,
                  'name' => $params->name,
-                 'description' => $params->content,
+                 'content' => $params->content,
                  'telegram_bot' => $params->telegram_bot,
                  'whatsapp_number' => $params->whatsapp_number,
                  'start_message'=>$params->start_message 
              ]);
 
+
              if (isset($params->flows)) {
                 foreach ($params->flows as $flowData) {
                     $bot->flows()->create([
-                        'bot_id' => $flowData['bot_id'],
-                        'sort' => $flowData['sort'],
-                        'add_answer_before' => $flowData['add_answer_before'],
-                        'add_keyword' => $flowData['add_keyword'],
-                        'add_answer_next' => $flowData['add_answer_next'],
+                            'bot_id' => $bot->id,
+                            'sort' => $flowData['sort'],
+                            'name' => $flowData['name'],
+                            'description' => $flowData['description'],
                     ]);
                 }
             }
+
+            $bot->update(['service'=> $bot->name.$bot->id]);
      }
  
      public function update(Bot $Bot, array $params){
 
-        $Bot->update([
-            'name'           => $params['name'],
-            'description'    => $params['description'] ?? null,
-            'start_message'  => $params['start_message'] ?? null,
-        ]);
+        $Bot->update($params);
 
         // Update flows
         if (isset($params['flows'])) {
@@ -72,24 +70,30 @@ final class BotRepository extends BaseRepository
                     $flow =  $this->flow->find($flowData['id']);
                     if ($flow) {
                         $flow->update([
-                            'bot_id' => $flowData['bot_id'],
+                            'bot_id' => $Bot->id,
                             'sort' => $flowData['sort'],
-                            'add_answer_before' => $flowData['add_answer_before'],
-                            'add_keyword' => $flowData['add_keyword'],
-                            'add_answer_next' => $flowData['add_answer_next'],
+                            'name' => $flowData['name'],
+                            'description' => $flowData['description'],
                         ]);
                     }
                 } else {
                     // Create a new flow 
                     $Bot->flows()->create([
-                            'bot_id' => $flowData['bot_id'],
+                            'bot_id' => $Bot->id,
                             'sort' => $flowData['sort'],
-                            'add_answer_before' => $flowData['add_answer_before'],
-                            'add_keyword' => $flowData['add_keyword'],
-                            'add_answer_next' => $flowData['add_answer_next'],
+                            'name' => $flowData['name'],
+                            'description' => $flowData['description'],
                     ]);
                 }
             }
         }
+
+        return $Bot;
+     }
+
+     public function activated(Bot $Bot, array $params){
+
+        $Bot->update($params);
+
      }
 }

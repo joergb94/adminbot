@@ -19,6 +19,8 @@ import DialogService from 'primevue/dialogservice'
 import Button from 'primevue/button';
 import Card from 'primevue/card';
 import Image from 'primevue/image';
+import PrimeIconComponent from '@/components/form/PrimeIconComponent.vue';
+import LoadingComponent from '@/components/datatable/LoadingComponent.vue';
 import Toast from 'primevue/toast';
 import Dialog from 'primevue/dialog';
 import Ripple from 'primevue/ripple';
@@ -42,4 +44,6 @@ app.component('prime-card', Card);
 app.component('Dialod',Dialog);
 app.component('prime-button', Button);
 app.component('fontAwesomeIcon', FontAwesomeIcon);
+app.component('PrimeIconComponent',PrimeIconComponent);
+app.component('LoadingComponent',LoadingComponent);
 export default app;

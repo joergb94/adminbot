@@ -1,9 +1,9 @@
 <script setup>
 import { useStore } from 'vuex';
 import { ref, computed, watch, onBeforeMount, onMounted } from 'vue';
-import { useForm, useField } from 'vee-validate';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { BotShapeSchema } from '../store/BotShapeSchema';
+import { useFieldArray, useForm, useField } from 'vee-validate';
+import AddFlowsComponent from '../components/AddFlowsComponent.vue';
+import { BotShapeSchema } from '@/components/bot/validations/BotShapeSchema';
 import useConfirmation from '@/composable/useConfirmation';
 import useToastComposable from '@/composable/useToastComposable';
 import InputStringComponent from "@/components/form/InputStringComponent.vue";
@@ -19,6 +19,8 @@ import DataTable from 'primevue/datatable';
 import ProgressBar from 'primevue/progressbar';
 import Stepper from 'primevue/stepper';
 import StepperPanel from 'primevue/stepperpanel';
+import DataView from 'primevue/dataview';
+import DataViewLayoutOptions from 'primevue/dataviewlayoutoptions'
 
 
 // ------- Common variables
@@ -36,8 +38,8 @@ const dispatch = useStore().dispatch;
 const showFormProgressBar = computed(() => getters[`${moduleName}/getShowFormProgressBar`]);
 const bot = computed(() => getters[`${moduleName}/getRegisterBot`]);
 const validateBotName = computed(() => getters[`${moduleName}/getRegisterValidateBotName`]);
+const newFlow = computed(() => getters[`${moduleName}/getRegisterFlow`]);
 const registers = computed(() => getters['registers/getRegistersAll']);
-
 // ------- useConfirm and UseForm
 const { confirmAction } = useConfirmation();
 
@@ -54,6 +56,8 @@ const { value: whatsapp_number } = useField('whatsapp_number');
 const { value: start_message } = useField('start_message');
 const { value: language } = useField('language');
 const { value: flows } = useField('flows');
+const new_flows = ref([]);
+const is_start_message = ref(false);
 
 //--------before for mount
 onBeforeMount(() => {
@@ -65,10 +69,18 @@ onBeforeMount(() => {
 onMounted(() => {
     if (bot.value?.id) {
         setValues(bot.value);
+         new_flows.value = flows.value;
     }
 });
 
-watch(  () =>  getters[`${moduleName}/getRegisterBot`],(newbot)=>{
+
+watch(newFlow, (newVal) => {
+    new_flows.value.unshift(newFlow.value);
+    flows.value = new_flows.value;
+});
+
+
+watch(() =>  getters[`${moduleName}/getRegisterBot`],(newbot)=>{
     if(bot.value?.name){
         setValues(newbot);
     }else{
@@ -76,9 +88,15 @@ watch(  () =>  getters[`${moduleName}/getRegisterBot`],(newbot)=>{
     }
 });
 
+watch(
+      () => errors.value, 
+      (newErrors) => countErros(newErrors) 
+    );
 
-
-
+watch(is_start_message,(new_is_start_message) => {
+        start_message.value = is_start_message.value?start_message.value:null;
+});
+    
 const onPressName = (e) => {
     
     const parms ={ name:e.target.value}
@@ -87,10 +105,7 @@ const onPressName = (e) => {
     e.preventDefault();
 };
 
-watch(
-      () => errors.value, // Watch the errors object
-      (newErrors) => countErros(newErrors) // Call countErros when errors change
-    );
+
 
 
 const countErros = (errors) =>{
@@ -109,13 +124,21 @@ const countErros = (errors) =>{
     errorsStep3.value = errors.flows? errorsStep3.value + 1: errorsStep3.value;
    
 }
-
+const deleteFlow = (index) => {
+    confirmAction('¿ Estas seguro de realizar esta accion ?', {
+        header:'Eliminar datos de este flujo',
+        accept: () => {
+            new_flows.value.splice(index, 1);
+            flows.value = new_flows.value;
+        }, 
+    });
+}
 
 // ------- Submit FORM
 const onSubmit = handleSubmit((data) => {
     countErros(errors.value);
     confirmAction('¿ Estas seguro de realizar esta accion ?', {
-        header:'Guardar datos de esta empresa',
+        header:'Guardar datos de este bot',
         accept: () => {
             const params = data;
             const action = 'id' in data && data.id != null? 'updateRegisterBotRequest' : 'storeRegisterBotRequest';
@@ -136,7 +159,7 @@ const onSubmit = handleSubmit((data) => {
                         <StepperPanel>
                             <template #header="{ index, clickCallback }">
                                 <button class="bg-transparent border-none inline-flex flex-column gap-2" @click="clickCallback">
-                                    <span :class="[{ 'bg-primary border-primary': index <= active, 'surface-border': index > active }]">
+                                    <span >
                                         Diseña <i class="pi pi-hammer" /> <span class="p-stepper-number" data-pc-section="number">1</span>
                                     </span>
                                     <ErrorSteperComponent :errorStep="errorsStep1"></ErrorSteperComponent>
@@ -171,12 +194,13 @@ const onSubmit = handleSubmit((data) => {
                                             </div>
                                             <div class="sm:col-12 lg:col-4 xl:col-4">
                                                 <InputBooleanComponent
-                                                    v-model="Checkbox"
+                                                    v-model="is_start_message"
                                                     label="¿Desea establecer un mensaje inicial?"
                                                 />
                                             </div>
                                             <div class="sm:col-8 lg:col-8 xl:col-8">
                                                 <InputStringComponent
+                                                    v-if="is_start_message"
                                                     icon="fa-solid fa-building-user"
                                                     v-model="start_message"
                                                     :error="errors.start_message"
@@ -207,7 +231,7 @@ const onSubmit = handleSubmit((data) => {
                         <StepperPanel >
                             <template #header="{ index, clickCallback }">
                                 <button class="bg-transparent border-none inline-flex flex-column gap-2" @click="clickCallback">
-                                    <span :class="[{ 'bg-primary border-primary': index <= active, 'surface-border': index > active }]">
+                                    <span >
                                         Conecta <i class="pi pi-globe" /> <span class="p-stepper-number" data-pc-section="number">2</span>
                                     </span>
                                     <ErrorSteperComponent  :errorStep="errorsStep2"></ErrorSteperComponent>
@@ -244,7 +268,7 @@ const onSubmit = handleSubmit((data) => {
                         <StepperPanel >
                             <template #header="{ index, clickCallback }">
                                 <button class="bg-transparent border-none inline-flex flex-column gap-2" @click="clickCallback">
-                                    <span :class="[{ 'bg-primary border-primary': index <= active, 'surface-border': index > active }]">
+                                    <span >
                                         Proceso <i class="pi pi-microchip-ai" /> <span class="p-stepper-number" data-pc-section="number">3</span>
                                     </span>
                                     <ErrorSteperComponent :errorStep="errorsStep3"></ErrorSteperComponent>
@@ -254,33 +278,37 @@ const onSubmit = handleSubmit((data) => {
                                 <div class="flex flex-column ">
                                     <div class="col-12">
                                     <div class="grid">
-                                            <div class="sm:col-12 lg:col-6 xl:col-6">
-                                                <InputStringComponent
-                                                    icon="fa-solid fa-building-user"
-                                                    v-model="flow_name"
-                                                    :error="errors.flow_name"
-                                                    :required="true"
-                                                    label="name"
-                                                />
+                                            <div class="col-6">
+                                                <h3>Agrega tus flujos</h3>
+                                                <AddFlowsComponent :flows = "new_flows"/>
                                             </div>
-                                            <div class="sm:col-12 lg:col-6 xl:col-6">
-                                                <InputStringComponent
-                                                    icon="fa-solid fa-building-user"
-                                                    v-model="flow_description"
-                                                    :error="errors.flow_description"
-                                                    :required="true"
-                                                    label="desciption"
-                                                />
-                                            </div>
-                                            <div class="col-12">
-                                                <DataTable :value="flows" stripedRows tableStyle="min-width: 50rem">
-                                                    <Column field="name" header="name"></Column>
-                                                    <Column field="description" header="description"></Column>
-                                                    <Column header="Options"></Column>
-                                                    <template #empty>
-                                                        <NoFoundDataComponent v-if="!showLoading" title="No hay Bots" />
-                                                    </template>
-                                                </DataTable>
+                                            <div class="col-6">
+                                                <h3>Flujos</h3>
+                                                <DataView :value="new_flows" paginator :rows="3">
+                                                        <template #list="slotProps">
+                                                            <div class="grid grid-nogutter">
+                                                                <div v-for="(item, index) in slotProps.items" :key="index" class="col-12">
+                                                                    <div class="flex flex-column sm:flex-row sm:align-items-center p-4 gap-3" :class="{ 'border-top-1 surface-border': index !== 0 }">
+                                                                        <div class="md:w-10rem relative">
+                                                                            <div class="text-lg font-medium text-900 mt-2">{{ item.name }}</div>
+                                                                        </div>
+                                                                        <div class="flex flex-column md:flex-row justify-content-between md:align-items-center flex-1 gap-4">
+                                                                            <div class="flex flex-row md:flex-column justify-content-between align-items-start gap-2">
+                                                                                <div>
+                                                                                    <span class="font-medium text-secondary text-sm">{{ item.description }}</span>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="flex flex-column md:align-items-end gap-5">
+                                                                                <div class="flex flex-row-reverse md:flex-row gap-2">
+                                                                                    <Button icon="pi pi-trash" severity="danger" @click ="deleteFlow(index)"/>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </template>
+                                                    </DataView>
                                                 <ErrorMessageComponent :message="errors.flows"></ErrorMessageComponent>
                                             </div>
                                     </div>

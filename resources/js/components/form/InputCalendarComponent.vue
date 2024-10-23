@@ -43,10 +43,3 @@ watch(value, (newVal) => {
     </div>
     <ErrorMessageComponent :message="error"></ErrorMessageComponent>
 </template>
-
-<style lang="postcss">
-input::placeholder {
-    color: #acb1b6;
-    font-weight: normal;
-}
-</style>

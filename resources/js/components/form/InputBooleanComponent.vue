@@ -26,7 +26,7 @@ watch(value, (newVal) => {
 </script>
 <template>
     <div class="field-checkbo p-2">
-        <Checkbox id="binary" v-model="value" :binary="true" class="pr-1" />
+        <Checkbox id="binary" v-model="value" :binary="true" :class="{ 'p-checked-checkbox': modelValue }"  class="pr-1" />
         <label for="city1">{{ label }}</label>
     </div>
     

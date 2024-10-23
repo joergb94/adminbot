@@ -10,7 +10,7 @@ import Card from 'primevue/card';
 import app from "@/base-app";
 
 const routes = [
-    { path: '/cliente/entrar', component: {} },
+    { path: '/inicio', component: {} },
 ];
 
 const router = createRouter({

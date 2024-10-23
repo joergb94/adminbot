@@ -1,11 +1,11 @@
 <script setup>
-import { ref , onMounted} from 'vue';
+import { ref , onMounted, watch } from 'vue';
 import Menubar from 'primevue/menubar';
 import Menu from 'primevue/menu';
 import Button from 'primevue/button';
 import Image from 'primevue/image'
-import Dock from 'primevue/dock';
 import ButtonGroup from 'primevue/buttongroup';
+
 const props = defineProps({
   authenticated: Boolean,
   token : String
@@ -27,41 +27,32 @@ const items = ref([]);
 const itemsAuthenticated = ref([
     {
         label: 'Home',
-        icon: 'fa fa-home',
-        url:'/cliente/inicio'
+        icon: 'pi pi-home',
+        url:'/inicio'
     },
     {
-        label: 'Mis Empresas',
-        icon: 'fa fa-address-book',
-        url:'/cliente/empresas'
+        label: 'Bots',
+        icon: 'pi pi-comments',
+        url:'/bots'
     },
-    {
-        label: 'Generar Facturas',
-        icon: 'fa fa-file-invoice-dollar',
-        url:'/cliente/facturacion'
-    },
-    {
-        label: 'Mis Facturas',
-        icon: 'fa fa-wallet',
-        url:'/cliente/facturas'
-    },
+
 ]);
 
 
 const handleMenu = () =>{
-    return authenticated == true? itemsAuthenticated.value:items.value
+    return authenticated == true? itemsAuthenticated.value:[]
 }
 onMounted(() => { items.value = handleMenu()});
 </script>
 <template>
-        <Menubar class="custom-menubar background-black" >
+        <Menubar class="background-black" :model="items">
             <template #start>
                     <Image src="/assets/logo-name.png" alt="Image" width="150" style="margin: 0;" class="mr-5"/>
             </template>
             <template #item="{ item, props, hasSubmenu, root }">
-                <a v-ripple :href="item.url" :target="item.target" v-bind="props.action" class="ml-5">
+                <a v-ripple :href="item.url"  v-bind="props.action" >
                     <span>
-                        <fontAwesomeIcon :icon="item.icon" class="mr-1  text-white" />{{ item.label }}
+                        <PrimeIconComponent :icon="item.icon" :color="'neo-text-purple'" :label ="item.label"/>
                     </span> 
                 </a>
                 </template>

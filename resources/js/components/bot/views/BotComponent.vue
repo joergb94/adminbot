@@ -17,8 +17,7 @@ const { toast } = useToastComposable();
 
 const moduleName = 'storeBot';
 const title = getters[`${moduleName}/getTitle`];
-const subTitle = getters[`${moduleName}/getSubTitle`];
-const breadcrumb = getters[`${moduleName}/getBreadcrumb`];
+const icon = getters[`${moduleName}/getIcon`];
 const props = defineProps({
     registers: {
         type: String
@@ -35,8 +34,6 @@ const showModalFormHandler = (show) => {
     showModalForm.value = show;
 };
 
-
-
 onMounted(() => {
     dispatch(`${moduleName}/moduleRequest`, { action: 'findRegisterBotAllBladeRequest', params: JSON.parse(props.registers), toast });
 });
@@ -45,12 +42,19 @@ onMounted(() => {
 <template>
         <Toast />
         <ConfirmDialog class="sm:col-12 lg:col-4 xl:col-4"></ConfirmDialog>
-        <Card class="col-12">
+        <Card class="col-12 neo-background-white">
             <template #title>
-                <h2 class="text-left" ><fontAwesomeIcon icon="fa fa-address-book" class="mr-1 text-primary-700" /> {{ title }} </h2>
+                <h2 class="text-left" >
+                        <PrimeIconComponent 
+                            :icon="icon" 
+                            :color="'neo-text-purple'" 
+                            :label ="title" 
+                            size="2rem"/>
+                </h2>
+                <BotToolbarComponent :result="records? records.length: 0" />
             </template>
             <template #content>
-                <BotToolbarComponent :result="records? records.length: 0" />
+                
                 <BotDataTableComponent :registers="records" />
             </template>
         </Card>

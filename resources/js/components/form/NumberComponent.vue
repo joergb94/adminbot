@@ -29,10 +29,3 @@ watch(modelValue, (newVal) => {
         </div>
     </div>
 </template>
-
-<style>
-.borderJustString {
-    font-weight: 600;
-    border-bottom: thin solid #add1ed;
-}
-</style>

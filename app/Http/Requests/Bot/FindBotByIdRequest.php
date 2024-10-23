@@ -22,7 +22,7 @@ class FindBotByIdRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'id' => 'required|integer',
         ];
     }
 }

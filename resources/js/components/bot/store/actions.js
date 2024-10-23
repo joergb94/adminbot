@@ -58,6 +58,9 @@ export const modalRequest = async ({ commit, dispatch }, { action, params, toast
                 response = await findRegisterBotByNameService(params);
                 commit('setRegisterValidateBotName', response.data.record );
             break;
+            case 'AddFlowRequest':
+                commit('setRegisterFlow',params);
+            break; 
         }
         commit('setShowFormProgressBar', false);
     } catch (errors) {

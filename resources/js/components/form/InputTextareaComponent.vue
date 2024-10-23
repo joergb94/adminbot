@@ -1,6 +1,7 @@
 <script setup>
 import { ref, toRefs } from 'vue';
 import { watch } from 'vue';
+import Textarea from 'primevue/textarea'; 
 import ErrorMessageComponent from './ErrorMessageComponent.vue';
 const props = defineProps({
     modelValue: {
@@ -68,10 +69,3 @@ const handleInput = (newVal) => {
     </div>
     <ErrorMessageComponent :message="error"></ErrorMessageComponent>
 </template>
-
-<style lang="postcss">
-input::placeholder {
-    color: #acb1b6;
-    font-weight: normal;
-}
-</style>

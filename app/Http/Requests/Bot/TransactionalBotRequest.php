@@ -19,9 +19,9 @@ class TransactionalBotRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+    public function rules()
     {
-        return [
+        $rules = [
             'name' => 'required|string',
             'content' => 'required|string',
             'telegram_bot' => 'required|string',
@@ -30,7 +30,17 @@ class TransactionalBotRequest extends FormRequest
             'language.id' => 'required|integer',
             'language.name' => 'required|string',
             'language_id' => 'required|integer',
+            'flows'=>'required|array',
+            'flows.*.name' => ['required', 'string', 'distinct'], 
+            'flows.*.description' => 'nullable|string',
+            'flows.*.sort' => ['required', 'integer', 'min:1'],
         ];
+
+        if (isset($this->id) && !empty($this->id)) {
+            $rules['id'] = 'required|int|exists:bots,id,deleted_at,NULL';
+        }
+
+        return $rules;
     }
 
         /**

@@ -35,13 +35,17 @@ class Bot extends Model
             'id'                    => $this->id,
             'name'                  => $this->name,
             'role'                  => $this->role,
-            'content'           => $this->content,
+            'active'                => $this->active,
+            'telegram_bot'          => $this->telegram_bot,
+            'whatsapp_number'       => $this->whatsapp_number,
+            'content'               => $this->content,
             'start_message'         => $this->start_message,
             'created_at'            => $this->created_at,
             'updated_at'            => $this->updated_at,
             'deleted_at'            => $this->deleted_at,
             'language'              => $this->language,
             'user'                  => $this->user,
+            'flows'                 =>isset($this->flows)?$this->flows:[]
         ];
     }
 

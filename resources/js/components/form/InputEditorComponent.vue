@@ -80,10 +80,3 @@ watch(value, (newVal) => {
         </Card>
     </div>
 </template>
-
-<style lang="postcss">
-input::placeholder {
-    color: #acb1b6;
-    font-weight: normal;
-}
-</style>

@@ -8,7 +8,6 @@ import InputStringComponent from "@/components/form/InputStringComponent.vue";
 import InputMaskComponent from "@/components/form/InputMaskComponent.vue";
 import useToastComposable from '@/composable/useToastComposable';
 import useConfirmation from '@/composable/useConfirmation';
-import LoadingComponent from '../../datatable/LoadingComponent.vue';
 
 const dispatch = useStore().dispatch;
 const getters = useStore().getters;

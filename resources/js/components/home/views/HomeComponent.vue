@@ -8,7 +8,7 @@
 </script>
 
 <template>
-        <Card class="col-sm-6 neo-background  text-center">
+        <Card class="col-sm-6 mt-5 neo-background  text-center">
             <template #header>
                 <div class="col-12">
                     <img alt="user header" src="/assets/logo-name.png"  width="80%"  />

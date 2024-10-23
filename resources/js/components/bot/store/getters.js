@@ -5,11 +5,18 @@ export const getRegisterBotAll = (state) => {
 export const getInitialValues = (state) => {
     return state.bot.initialValues;
 };
+export const getFlowInitialValues = (state) => {
+    return state.flow.initialValues;
+};
 export const getInitialValuesName = (state) => {
     return state.bot.initialValuesName;
 };
 
 export const getRegisterBot = (state) => {
+    return state.bot.record;
+};
+
+export const getRegisterFlow = (state) => {
     return state.bot.record;
 };
 
@@ -23,6 +30,10 @@ export const getAddress = (state) => {
 
 export const getTitle = (state) => {
     return state.title;
+};
+
+export const getIcon = (state) => {
+    return state.icon;
 };
 
 export const getSubTitle = (state) => {

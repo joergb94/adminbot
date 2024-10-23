@@ -3,7 +3,11 @@ export const setRegisterBotAll = (state, data) => {
 };
 
 export const setRegisterBot = (state, data) => {
-    state.bot.record = data == null? true:false;
+    state.bot.record = data;
+};
+
+export const setRegisterFlow = (state, data) => {
+    state.bot.record = data;
 };
 
 export const setRegisterValidateBotName = (state,data) => {

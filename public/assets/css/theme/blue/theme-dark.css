@@ -5899,8 +5899,14 @@
 }
 
 .neo-text-purple{
-  color:#5d5adc !important;
+  color: #5d5adc !important;
 }
+
+.neo-background-purple{
+  color: #fff5f5 !important;
+  background: #5d5adc !important;
+}
+
 
 
 .neo-text-green{

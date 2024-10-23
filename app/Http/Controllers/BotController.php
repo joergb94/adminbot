@@ -81,7 +81,7 @@ class BotController extends Controller
         if (!$request->ajax()) abort(404);
             $params = $request->validated();
             DB::beginTransaction();
-            $data = $this->updateBotUseCase->__invoke($params->id, $params);
+            $data = $this->updateBotUseCase->__invoke($params['id'], $params);
             DB::commit();
             return response()->json(['record' =>$data->mapped()]);
     }

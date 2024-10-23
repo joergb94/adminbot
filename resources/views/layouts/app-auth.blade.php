@@ -64,5 +64,5 @@
     <div id ="main-load" class="grid  w-full justify-center items-center hide">
                 @yield('layout-content')
     </div>
-<body>
+</body>
 </html>

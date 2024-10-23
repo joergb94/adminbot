@@ -7,11 +7,6 @@ export const BotShapeSchema = yup.object().shape({
     telegram_bot: stringSchema.label('telegram_bot').max(50).required(),
     whatsapp_number: stringSchema.label('whatsapp_number').max(50).required(),
     language: objectShapeSchema.label('Lenguaje').required(),
-    start_message: stringSchema.label('Mensaje de inicio').max(200).required(),
+    start_message: stringSchema.label('Mensaje de inicio').nullable().min(5).max(200),
     flows: flowSchema,
-});
-
-export const BotSearchShapeSchema = yup.object().shape({
-    flow_name:  stringSchema.label('Nombre').max(50).required(),
-    flow_description:  stringSchema.label('Nombre').max(50).required(),
 });
