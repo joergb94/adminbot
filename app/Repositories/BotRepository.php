@@ -33,6 +33,7 @@ final class BotRepository extends BaseRepository
                  'user_id' => Auth::user()->id,
                  'language_id' => $params->language_id,
                  'name' => $params->name,
+                 'description' => $params->description,
                  'content' => $params->content,
                  'telegram_bot' => $params->telegram_bot,
                  'whatsapp_number' => $params->whatsapp_number,
@@ -44,9 +45,9 @@ final class BotRepository extends BaseRepository
                 foreach ($params->flows as $flowData) {
                     $bot->flows()->create([
                             'bot_id' => $bot->id,
-                            'sort' => $flowData['sort'],
-                            'name' => $flowData['name'],
-                            'description' => $flowData['description'],
+                            'sort' => $flowData['flow_sort'],
+                            'name' => $flowData['flow_name'],
+                            'description' => $flowData['flow_description'],
                     ]);
                 }
             }
@@ -54,17 +55,25 @@ final class BotRepository extends BaseRepository
             $bot->update(['service'=> $bot->name.$bot->id]);
      }
  
-     public function update(Bot $Bot, array $params){
+     public function update(Bot $Bot, object $params){
 
-        $Bot->update($params);
+        $Bot->update([
+                'language_id' => $params->language_id,
+                'name' => $params->name,
+                'description' => $params->description,
+                'content' => $params->content,
+                'telegram_bot' => $params->telegram_bot,
+                'whatsapp_number' => $params->whatsapp_number,
+                'start_message'=>$params->start_message 
+            ]);
 
         // Update flows
-        if (isset($params['flows'])) {
+        if (isset($params->flows)) {
 
-            $flowIds = collect($params['flows'])->pluck('id')->filter()->all();
+            $flowIds = collect($params->flows)->pluck('id')->filter()->all();
             $Bot->flows()->whereNotIn('id', $flowIds)->delete();
 
-            foreach ($params['flows'] as $flowData) {
+            foreach ($params->flows as $flowData) {
                 if (isset($flowData['id'])) {
                     // Update existing flow
                     $flow =  $this->flow->find($flowData['id']);
@@ -92,8 +101,10 @@ final class BotRepository extends BaseRepository
      }
 
      public function activated(Bot $Bot, array $params){
-
         $Bot->update($params);
+     }
 
+     public function deleted(Bot $Bot){
+        $Bot->delete();
      }
 }

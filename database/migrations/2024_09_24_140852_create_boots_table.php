@@ -20,7 +20,8 @@ return new class extends Migration
             $table->string('role')->default('system');
             $table->string('telegram_bot')->nullable();
             $table->string('whatsapp_number')->nullable();
-            $table->string('content')->nullable();
+            $table->longText('description')->nullable();
+            $table->longText('content')->nullable();
             $table->integer('active')->default(0);
             $table->string('start_message')->nullable();
             $table->timestamps();

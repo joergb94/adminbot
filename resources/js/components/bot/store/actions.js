@@ -1,10 +1,11 @@
 import {
     findRegisterBotAllService,
-    findPostalCodeService,
     findRegisterBotByIdService,
     storeRegisterBotService,
     updateRegisterBotService,
-    findRegisterBotByNameService
+    turnOnOrOffRegisterBotService,
+    findRegisterBotByNameService,
+    deleteRegisterBotService
 } from '../services/BotService.js';
 
 export const moduleRequest = async ({ commit }, { action, params, toast }) => {
@@ -27,6 +28,25 @@ export const moduleRequest = async ({ commit }, { action, params, toast }) => {
                 commit('setRegisterBot', response.data.record );
                 commit('setShowModalForm', true);
                 break;
+            case 'turnOnOrOffRegisterBotRequest':
+                    await turnOnOrOffRegisterBotService(params);
+                    response = await findRegisterBotAllService();
+                    commit('setRegisterBotAll', response.data.records);
+                    commit('setShowLoading', false);
+            break;
+            case 'deleteRegisterBotRequest':
+                    await deleteRegisterBotService(params);
+                    response = await findRegisterBotAllService();
+                    commit('setRegisterBotAll', response.data.records);
+                    commit('setShowLoading', false);
+            break;
+            case 'findRegisterBotByIdDetailRequest':
+                    response = await findRegisterBotByIdService(params);
+                    commit('setRegisterBot', response.data.record );
+                    console.log(response.data.record.name)
+                    commit('setDetailTitle', 'Informacion de '+response.data.record.name );
+                    commit('setShowModalFormDetail', true);
+            break;
         }
         commit('setShowMainProgressBar', false);
     } catch (errors) {
@@ -59,6 +79,7 @@ export const modalRequest = async ({ commit, dispatch }, { action, params, toast
                 commit('setRegisterValidateBotName', response.data.record );
             break;
             case 'AddFlowRequest':
+                console.log(params)
                 commit('setRegisterFlow',params);
             break; 
         }
@@ -87,6 +108,10 @@ export const modalRequest = async ({ commit, dispatch }, { action, params, toast
 export const showModalFormState = ({ commit }, show) => {
     commit('setShowModalForm', show);
     commit('setRegisterValidateBotName', null);
+};
+
+export const showModalFormDetailState = ({ commit }, show) => {
+    commit('setShowModalFormDetail', show);
 };
 
 export const resetRegisterBotState = ({ commit }) => {

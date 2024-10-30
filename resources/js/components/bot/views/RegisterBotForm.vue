@@ -3,6 +3,7 @@ import { useStore } from 'vuex';
 import { ref, computed, watch, onBeforeMount, onMounted } from 'vue';
 import { useFieldArray, useForm, useField } from 'vee-validate';
 import AddFlowsComponent from '../components/AddFlowsComponent.vue';
+import DataViewFlows from '../components/DataViewFlows.vue';
 import { BotShapeSchema } from '@/components/bot/validations/BotShapeSchema';
 import useConfirmation from '@/composable/useConfirmation';
 import useToastComposable from '@/composable/useToastComposable';
@@ -19,8 +20,6 @@ import DataTable from 'primevue/datatable';
 import ProgressBar from 'primevue/progressbar';
 import Stepper from 'primevue/stepper';
 import StepperPanel from 'primevue/stepperpanel';
-import DataView from 'primevue/dataview';
-import DataViewLayoutOptions from 'primevue/dataviewlayoutoptions'
 
 
 // ------- Common variables
@@ -50,6 +49,7 @@ const { handleSubmit, errors, setValues } = useForm({
 
 const newErros = errors;
 const { value: name } = useField('name');
+const { value: description } = useField('description');
 const { value: content } = useField('content');
 const { value: telegram_bot } = useField('telegram_bot');
 const { value: whatsapp_number } = useField('whatsapp_number');
@@ -96,7 +96,30 @@ watch(
 watch(is_start_message,(new_is_start_message) => {
         start_message.value = is_start_message.value?start_message.value:null;
 });
-    
+
+watch([description, new_flows, start_message], (new_description, new_new_flows, new_start_message) => {
+
+    content.value = '';
+
+    // Update content if description has changed and is valid
+    if (description.value && description.value.length > 0) {
+        content.value = description.value;
+
+        if (is_start_message.value) {
+            content.value += `\nY tu saludo inicial será: ${start_message.value || ''}.`;
+        }
+
+        if (Array.isArray(new_flows.value) && new_flows.value.length > 0) {
+            new_flows.value.forEach(element => {
+                if (element.description) {
+                    content.value += ` ,${element.description}`;
+                }
+            });
+        }
+    }
+});
+
+
 const onPressName = (e) => {
     
     const parms ={ name:e.target.value}
@@ -124,15 +147,6 @@ const countErros = (errors) =>{
     errorsStep3.value = errors.flows? errorsStep3.value + 1: errorsStep3.value;
    
 }
-const deleteFlow = (index) => {
-    confirmAction('¿ Estas seguro de realizar esta accion ?', {
-        header:'Eliminar datos de este flujo',
-        accept: () => {
-            new_flows.value.splice(index, 1);
-            flows.value = new_flows.value;
-        }, 
-    });
-}
 
 // ------- Submit FORM
 const onSubmit = handleSubmit((data) => {
@@ -148,11 +162,20 @@ const onSubmit = handleSubmit((data) => {
   
 });
 
+const deleteFlow = (index) => {
+    confirmAction('¿ Estas seguro de realizar esta accion ?', {
+        header:'Eliminar datos de este flujo',
+        accept: () => {
+            flows.value.splice(index, 1);
+            new_flows.value = flows.value;
+        }, 
+    });
+}
+
 </script>
 
 <template>
     <ProgressBar mode="indeterminate" style="height: 1px" v-show="showFormProgressBar" />
-
             <form id="frmBot" @submit="onSubmit">
                 <div class="card">
                     <Stepper >
@@ -186,8 +209,8 @@ const onSubmit = handleSubmit((data) => {
                                             <div class="sm:col-12 lg:col-12 xl:col-12">
                                                 <InputTextareaComponent
                                                     icon="fa-solid fa-building-user"
-                                                    v-model="content"
-                                                    :error="errors.content"
+                                                    v-model="description"
+                                                    :error="errors.description"
                                                     :required="true"
                                                     label="Descripcion del bot"
                                                 />
@@ -284,31 +307,7 @@ const onSubmit = handleSubmit((data) => {
                                             </div>
                                             <div class="col-6">
                                                 <h3>Flujos</h3>
-                                                <DataView :value="new_flows" paginator :rows="3">
-                                                        <template #list="slotProps">
-                                                            <div class="grid grid-nogutter">
-                                                                <div v-for="(item, index) in slotProps.items" :key="index" class="col-12">
-                                                                    <div class="flex flex-column sm:flex-row sm:align-items-center p-4 gap-3" :class="{ 'border-top-1 surface-border': index !== 0 }">
-                                                                        <div class="md:w-10rem relative">
-                                                                            <div class="text-lg font-medium text-900 mt-2">{{ item.name }}</div>
-                                                                        </div>
-                                                                        <div class="flex flex-column md:flex-row justify-content-between md:align-items-center flex-1 gap-4">
-                                                                            <div class="flex flex-row md:flex-column justify-content-between align-items-start gap-2">
-                                                                                <div>
-                                                                                    <span class="font-medium text-secondary text-sm">{{ item.description }}</span>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="flex flex-column md:align-items-end gap-5">
-                                                                                <div class="flex flex-row-reverse md:flex-row gap-2">
-                                                                                    <Button icon="pi pi-trash" severity="danger" @click ="deleteFlow(index)"/>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </template>
-                                                    </DataView>
+                                                <DataViewFlows :flows="new_flows" :deleteFlow="deleteFlow"/>
                                                 <ErrorMessageComponent :message="errors.flows"></ErrorMessageComponent>
                                             </div>
                                     </div>
@@ -322,7 +321,6 @@ const onSubmit = handleSubmit((data) => {
                     </Stepper>
                 </div>
             </form>
-
 </template>
 <style scoped>
 .custom-file-upload .p-fileupload-buttonbar {

@@ -6,6 +6,7 @@ import LoadingComponent from '@/components/datatable/LoadingComponent.vue';
 import NoFoundDataComponent from '@/components/datatable/NoFoundDataComponent.vue'
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
+import SpeedDial from 'primevue/speeddial';
 import useToastComposable from '@/composable/useToastComposable';
 import useConfirmation from '@/composable/useConfirmation';
 
@@ -26,6 +27,7 @@ const filters = ref({
     whatsapp_number: { value: '', matchMode: FilterMatchMode.CONTAINS },
 });
 const moduleName = 'storeBot';
+const menu = ref();
 //check the value of progressbar and set on that
 const showLoading = ref(false);
 const dispatch = useStore().dispatch;
@@ -42,19 +44,40 @@ const selectBot = (row) => {
     dispatch(`${moduleName}/moduleRequest`, { action: 'findRegisterBotByIdRequest', params, toast });
 };
 
+const showBot = (row) => {
+    const params = { id: row.data.id };
+    dispatch(`${moduleName}/moduleRequest`, { action: 'findRegisterBotByIdDetailRequest', params, toast });
+};
+
 const tunrOnAndOffBot = (row) => {
 
-    let header = row.active < 0?'El Bot se activara':'El Bot se deasactivara';
+    let header = row.data.active == 0?'El Bot se activara':'El Bot se deasactivara';
     confirmAction('¿ Estas seguro de realizar esta accion ?', {
         header:header,
         accept: () => {
-            const params = row;
-            const action = !!row.active? 'updateRegisterBotRequest' : 'storeRegisterBotRequest';
-            dispatch(`${moduleName}/modalRequest`, { action, params: params, toast });
+            console.log(row.data.active)
+            const params = { id: row.data.id , active:row.data.active };
+            dispatch(`${moduleName}/moduleRequest`, { action: 'turnOnOrOffRegisterBotRequest', params, toast });
         }, 
     });
     
 };
+
+const deleteBot = (row) => {
+
+    let header = row.data.active == 0?'El Bot se activara':'El Bot se deasactivara';
+    confirmAction('¿ Estas seguro de realizar esta accion ?', {
+        header:header,
+        accept: () => {
+            console.log(row.data.active)
+            const params = { id: row.data.id };
+            dispatch(`${moduleName}/moduleRequest`, { action: 'deleteRegisterBotRequest', params, toast });
+        }, 
+    });
+
+};
+
+
 </script>
 
 <template>
@@ -114,13 +137,15 @@ const tunrOnAndOffBot = (row) => {
                 />
             </template>
         </Column>
-        <Column>
+        <Column header="opciones">
             <template #body="rowData">
-                <Button v-if ="displaySize > 500" label="" icon="pi pi-pen-to-square" type="button" severity="success"  @click="selectBot(rowData)" class="mt-1 mb-1" />
-                <!--<Button v-if ="displaySize > 500" label="" icon="pi pi-play" type="button" severity="success"  @click="tunrOnAndOffBot(rowData)" class="mt-1 mb-1" />
-                    <Button v-if ="displaySize > 500" label="" icon="pi pi-stop" type="button" severity="danger"  @click="tunrOnAndOffBot(rowData)" class="mt-1 mb-1" />
-                <Button  icon="pi pi-pen-to-square" type="button" severity="danger"  @click="selectBot(rowData)" class="mt-1 mb-1" />-->
+                <Button v-if ="displaySize > 500" label="" icon="pi pi-pen-to-square" type="button" severity="success"  @click="selectBot(rowData)" class="mt-1 mb-1 ml-1" />
+                <Button v-if ="displaySize > 500" label="" icon="pi pi-eye" type="button" class="button-flexbetta-green mt-1 mb-1 ml-1" @click="showBot(rowData)"/>
+                <Button v-if ="displaySize > 500 && !rowData.data.active" label="" icon="pi pi-play" type="button" severity="success"  @click="tunrOnAndOffBot(rowData)" class="mt-1 mb-1 ml-1" />
+                <Button v-if ="displaySize > 500 &&  rowData.data.active" label="" icon="pi pi-stop" type="button" severity="danger"  @click="tunrOnAndOffBot(rowData)" class="mt-1 mb-1 ml-1" />
+                <Button  icon="pi pi-trash" type="button" severity="danger"  @click="deleteBot(rowData)" class="mt-1 mb-1 ml-1" />
             </template>
+            
         </Column>
         <template #empty>
             <LoadingComponent v-if="showLoading" />

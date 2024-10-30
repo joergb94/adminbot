@@ -24,6 +24,7 @@ class TransactionalBotRequest extends FormRequest
         $rules = [
             'name' => 'required|string',
             'content' => 'required|string',
+            'description' => 'required|string',
             'telegram_bot' => 'required|string',
             'whatsapp_number' => 'required|string',
             'start_message' => 'required|string',

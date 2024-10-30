@@ -34,18 +34,19 @@ const { handleSubmit, errors, setValues } = useForm({
     initialValues: getters[`${moduleName}/getFlowInitialValues`],
 });
 
-const { value: name } = useField('name');
-const { value: description } = useField('description');
-const { value: sort } = useField('sort');
+const { value: flow_name } = useField('flow_name');
+const { value: flow_description } = useField('flow_description');
+const { value: flow_sort } = useField('flow_sort');
 
 const onSubmit = handleSubmit((data) => {
   try {
-        valideteFlowName(data.name)
-        dispatch(`${moduleName}/modalRequest`, { action:'AddFlowRequest', params: data, toast }).then(()=>{
+        valideteFlowName(data.flow_name)
+        
+        dispatch(`${moduleName}/modalRequest`, { action:'AddFlowRequest', params:buildDataFlow(data), toast }).then(()=>{
                 setValues({
-                    name: '',
-                    description: '',
-                    sort: ''
+                    flow_name: '',
+                    flow_description: '',
+                    flow_sort: ''
                 });
         });
     
@@ -55,8 +56,16 @@ const onSubmit = handleSubmit((data) => {
   
 });
 
-const valideteFlowName = (name) =>{
-    const result = flows.value.filter(item => item.name === name);
+const buildDataFlow = (data) => {
+    return {
+            name: data.flow_name,
+            description: data.flow_description,
+            sort: data.flow_sort
+    };
+};
+
+const valideteFlowName = (flow_name) =>{
+    const result = flows.value.filter(item => item.name === flow_name);
     if(result.length > 0){
         throw new Error('El nombre del flujo no se puede repetir');
     }
@@ -73,8 +82,8 @@ const valideteFlowName = (name) =>{
                             <div class="sm:col-6">
                                     <InputStringComponent
                                     icon="fa-solid fa-building-user"
-                                    v-model="name"
-                                    :error="errors.name"
+                                    v-model="flow_name"
+                                    :error="errors.flow_name"
                                     :required="true"
                                     label="Nombre"
                                     />
@@ -82,8 +91,8 @@ const valideteFlowName = (name) =>{
                             <div class="sm:col-6">
                                 <InputStringComponent
                                     icon="fa-solid fa-building-user"
-                                    v-model="sort"
-                                    :error="errors.sort"
+                                    v-model="flow_sort"
+                                    :error="errors.flow_sort"
                                     :required="true"
                                     label="Orden"
                                 />
@@ -91,8 +100,8 @@ const valideteFlowName = (name) =>{
                             <div class="sm:col-12">
                                 <InputStringComponent
                                     icon="fa-solid fa-building-user"
-                                    v-model="description"
-                                    :error="errors.description"
+                                    v-model="flow_description"
+                                    :error="errors.flow_description"
                                     :required="true"
                                     label="Descripcion"
                                 />

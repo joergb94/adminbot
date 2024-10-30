@@ -37,6 +37,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get(__('routes.customer.bots'), [BotController::class, 'index'])->name('my-bots');
     Route::get(__('routes.customer.bot'), [BotController::class, 'getBotById'])->name('bot');
     Route::get(__('routes.customer.bot.nombre'), [BotController::class, 'getBotByName'])->name('bot');
+    Route::put(__('routes.customer.bot.active'), [BotController::class, 'turnOnOrOffBot'])->name('bot-active');
+    Route::delete(__('routes.customer.bot.delete'), [BotController::class, 'deleteBot'])->name('bot-delete');
     Route::post(__('routes.customer.bot'), [BotController::class, 'store'])->name('bot.store');
     Route::put(__('routes.customer.bot'), [BotController::class, 'update'])->name('bot.update');
 });

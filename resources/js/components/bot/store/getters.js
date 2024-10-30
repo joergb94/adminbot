@@ -17,7 +17,7 @@ export const getRegisterBot = (state) => {
 };
 
 export const getRegisterFlow = (state) => {
-    return state.bot.record;
+    return state.flow.record;
 };
 
 export const getRegisterValidateBotName = (state) => {
@@ -31,6 +31,11 @@ export const getAddress = (state) => {
 export const getTitle = (state) => {
     return state.title;
 };
+
+export const getDetailTitle = (state) => {
+    return state.detailTitle;
+};
+
 
 export const getIcon = (state) => {
     return state.icon;
@@ -60,8 +65,8 @@ export const getShowModalForm = (state) => {
     return state.showModalForm;
 };
 
-export const getShowModalReport = (state) => {
-    return state.showModalReport;
+export const getShowModalFormDetail = (state) => {
+    return state.showModalFormDetail;
 };
 
 export const getModuleName = (state) => {

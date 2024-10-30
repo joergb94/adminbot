@@ -1,5 +1,6 @@
 export default {
     title: 'Mis Bots',
+    detailTitle:'',
     icon: 'pi pi-comments',
     showLoading: false,
     showFormProgressBar: false,

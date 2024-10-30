@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('sort')->default(0);
             $table->string('name')->nullable();
             $table->string('url')->nullable();
-            $table->string('description')->nullable();
+            $table->longText('description')->nullable();
             $table->json('addAnswerBefore')->nullable();
             $table->json('addKeyword')->nullable();
             $table->json('addAnswer')->nullable();

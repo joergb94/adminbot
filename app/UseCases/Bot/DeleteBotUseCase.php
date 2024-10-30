@@ -4,7 +4,7 @@ namespace App\UseCases\Bot;
 use App\Repositories\BotRepository;
 use App\UseCases\Bot\Find\FindBotByIdUseCase;
 
-final class UpdateBotUseCase {
+final class DeleteBotUseCase {
     private BotRepository $BotRepository;
     private FindBotByIdUseCase $findBotByIdUseCase;
 
@@ -14,11 +14,11 @@ final class UpdateBotUseCase {
         $this->findBotByIdUseCase = $findBotByIdUseCase;
     }
 
-    public function __invoke(int $id, object $params)
+    public function __invoke(int $id)
     {
         $Bot = $this->findBotByIdUseCase->__invoke($id);
         $this->BotRepository->beginTransaction();
-        $result = $this->BotRepository->update($Bot, $params);
+        $result = $this->BotRepository->deleted($Bot);
         $this->BotRepository->commitTransaction();
         return $result;
     }

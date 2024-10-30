@@ -6,8 +6,12 @@ export const setRegisterBot = (state, data) => {
     state.bot.record = data;
 };
 
+export const setDetailTitle = (state, data) => {
+    state.detailTitle = data;
+};
+
 export const setRegisterFlow = (state, data) => {
-    state.bot.record = data;
+    state.flow.record = data;
 };
 
 export const setRegisterValidateBotName = (state,data) => {
@@ -38,8 +42,8 @@ export const setShowModalForm = (state, show) => {
     state.showModalForm = show;
 };
 
-export const setShowModalReport = (state, show) => {
-    state.showModalReport = show;
+export const setShowModalFormDetail = (state, show) => {
+    state.showModalFormDetail = show;
 };
 
 export const resetRegisterBot = (state) => {

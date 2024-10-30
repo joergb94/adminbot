@@ -67,16 +67,12 @@ export const objectSchema = { id: integerSchema.required(), name: stringSchema.r
 export const objectCodeShapeSchema = Yup.object().shape(objectCodeSchema).nullable();
 export const objectShapeSchema = Yup.object().shape(objectSchema).nullable();
 export const objectFlow = Yup.object().shape({
-                                                id: Yup.number()
-                                                .required('El campo ID es requerido')
-                                                .positive('El ID debe ser un número positivo')
-                                                .integer('El ID debe ser un número entero'),
                                                 name: Yup.string()
-                                                .required('El campo Nombre es requerido')
-                                                .min(3, 'El Nombre debe tener al menos 3 caracteres'),
+                                                .required('El nombre del flujo es requerido')
+                                                .min(1, 'El Nombre debe tener al menos 1 caracteres'),
                                                 description: Yup.string()
-                                                .required('El campo Descripción es requerido')
-                                                .min(5, 'La Descripción debe tener al menos 5 caracteres'),
+                                                .required('La descripcion del flujo es requerido')
+                                                .min(1, 'La Descripción debe tener al menos 1 caracteres'),
                                             });
 export const arrayShapeSchema = Yup.array().of(objectShapeSchema.required()).nullable();
 export const arrayShapeCustomSchema = Yup.array();
