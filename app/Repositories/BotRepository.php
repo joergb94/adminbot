@@ -27,6 +27,11 @@ final class BotRepository extends BaseRepository
         return $this->model::where('name',$name)->where('user_id',Auth::user()->id)->first();
     }
 
+    
+    public function findByToken(String $token) {
+        return $this->model::where('telegram_bot',$token)->where('active',true)->first();
+    }
+
     public function store(object $params){
       
         $bot =  $this->model::create([

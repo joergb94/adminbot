@@ -265,7 +265,7 @@ const deleteFlow = (index) => {
                                    <div class="col-12">
                                     <div class="grid">
                                             <div class="sm:col-12 lg:col-6 xl:col-6">
-                                                <InputMaskComponent 
+                                                <InputStringComponent 
                                                     icon="fa-solid fa-mobile" 
                                                     v-model="telegram_bot"
                                                     :error="errors.telegram_bot" 

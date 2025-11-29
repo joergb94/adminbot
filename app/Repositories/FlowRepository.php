@@ -19,6 +19,14 @@ final class FlowRepository extends BaseRepository
         return $this->model::find($id);
     }
 
+     public function findByBotAndName(String $name, int $bot_id) : Flow {
+        $flow = $this->model::whereRaw('UPPER(name) = UPPER(?)', [$name])->where('bot_id',$bot_id)->first();
+        if(!isset($flow)){
+            return new Flow();
+        }
+         return $flow;
+    }
+
     public function store(object $params){
       
         return $this->model::create([
